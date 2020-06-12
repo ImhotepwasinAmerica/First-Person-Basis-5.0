@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed, jump_takeoff_speed, height_standing, height_squatting, lean_distance, distance_to_ground, speed_multiplier_squatting;
 
     private Vector3 velocity, velocity_endgoal;
-    private float angular_speed, gravity_fake, time_fake;
+    private float angular_speed, gravity_fake, time_fake, acceleration;
     private bool is_squatting, is_walking, current_grounded, previous_grounded;
     private Quaternion lean;
 
@@ -46,13 +46,39 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
+        //Walk();
+
+        //ApplyGravity();
+
+        //BetterMovement();
+
+        //Jump();
+
+        //CycaBlyat();
+
+        //MovementLean();
+
+        //ControlLean();
+
+        //WalkRun();
+
+        //velocity_endgoal = transformation.rotation * velocity_endgoal;
+
+        //previous_grounded = current_grounded;
+        //current_grounded = IsGrounded();
+    }
+
+    void FixedUpdate()
+    {
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
         Walk();
 
-        BetterMovement();
-
         ApplyGravity();
+
+        BetterMovement();
 
         Jump();
 
@@ -68,10 +94,7 @@ public class PlayerMovement : MonoBehaviour
 
         previous_grounded = current_grounded;
         current_grounded = IsGrounded();
-    }
 
-    void FixedUpdate()
-    {
         velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x, 0.15f);
         velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z, 0.15f);
         velocity.y = velocity_endgoal.y;
@@ -184,12 +207,12 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsBeneathSomething()
     {
-        return Physics.Raycast(transform.position, Vector3.up, controller.height-distance_to_ground+0.3f);
+        return Physics.Raycast(transform.position, Vector3.up, ((controller.height / 2) + 0.3f));
     }
 
     private void Jump()
     {
-        if (Input.GetButtonDown(PlayerPrefs.GetString("Jump"))
+        if (Input.GetButton(PlayerPrefs.GetString("Jump"))
             && IsGrounded())
         {
             velocity_endgoal.y += (jump_takeoff_speed * time_fake);
@@ -308,6 +331,18 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity_endgoal.x *= 0.5f;
             velocity_endgoal.z *= 0.5f;
+        }
+    }
+
+    private void AlterAcceleration()
+    {
+        if (IsGrounded())
+        {
+            acceleration = 0.15f;
+        }
+        else
+        {
+            acceleration = 0.1f;
         }
     }
 }
