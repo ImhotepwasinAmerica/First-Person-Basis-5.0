@@ -21,4 +21,12 @@ public class SavedObject
     public bool invincible, switch_on, weapon_ammo_count;
 
     public ArrayList inventory;
+
+    public List<int> ints;
+
+    public List<float> floats;
+
+    public List<string> strings;
+
+    public List<SavedObject> objects;
 }
