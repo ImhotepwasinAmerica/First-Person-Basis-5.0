@@ -29,7 +29,7 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
         else
         {
             held_object_anchor.transform.localRotation = new Quaternion(0, 0, 0, 0);
-
+            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
             this.GetComponent<Rigidbody>().useGravity = true;
             this.GetComponent<Rigidbody>().freezeRotation = false;
             held_object_anchor = null;

@@ -14,6 +14,25 @@ public class ControlsMiscellaneous : MonoBehaviour
     void Start()
     {
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
+        try
+        {
+            GameEvents.current.Pause += Pause;
+            GameEvents.current.Resume += Resume;
+        }
+        catch (System.NullReferenceException e)
+        {
+            Debug.Log("Event system not found.");
+        }
+        
+        // The Resume function is called when the scene begins.
+        // This is a safeguard against the scene remaining paused if it is re-loaded.
+        // This could be put in any script in the scene, but I'm putting it here because I want to.
+        try
+        {
+            GameEvents.current.ResumeGame();
+        }
+        catch (System.Exception e) { }
     }
 
     // Update is called once per frame

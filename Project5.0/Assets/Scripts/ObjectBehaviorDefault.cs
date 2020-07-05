@@ -12,12 +12,21 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     private void Awake()
     {
-        GameEvents.current.SmartDelete += DestroyOrChange; // This must run before DeleteSmartly is called
+        try // It sometimes occurs that the GameEvents script is not active when this is called.
+        {
+            GameEvents.current.SmartDelete += DestroyOrChange; // This must run before DeleteSmartly is called
+        }
+        catch (System.NullReferenceException e)
+        {
+            Debug.Log("Event system not found.");
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        GameEvents.current.SmartDelete += DestroyOrChange; // In case the first application of this line doesn't work
+
         GameEvents.current.DeleteAllTheThings += Destroy;
         GameEvents.current.SaveAllTheThings += SaveItem;
 
@@ -128,8 +137,6 @@ public class ObjectBehaviorDefault : MonoBehaviour
         }
         else
         {
-            Debug.Log(SceneManager.GetActiveScene().name);
-
             GameObject.Destroy(object_in_question);
         }
     }
