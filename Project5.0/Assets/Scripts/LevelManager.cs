@@ -62,7 +62,6 @@ public class LevelManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         guy = data_container.GetComponent<DataContainer>().character;
-        //Debug.Log(guy.rotation_y);
 
         if (data_container.GetComponent<DataContainer>().character.rotation_x != null
             && Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/"
@@ -70,7 +69,7 @@ public class LevelManager : MonoBehaviour
         {
             GameObject.Destroy(character);
 
-            character = GameObject.Instantiate(Resources.Load<GameObject>("Character"),
+            character = GameObject.Instantiate(Resources.Load<GameObject>("Character 1"),
                         new Vector3(guy.position_x, guy.position_y, guy.position_z),
                         Quaternion.Euler(guy.rotation_x, guy.rotation_y, guy.rotation_z)); // Does not actually accept
 
@@ -78,10 +77,6 @@ public class LevelManager : MonoBehaviour
             camera.GetComponent<PlayerLooking>().ex = guy.rotation_x;
             camera.GetComponent<PlayerLooking>().why = guy.rotation_y;
             camera.GetComponent<PlayerLooking>().zee = guy.rotation_z;
-
-            //Debug.Log(camera.GetComponent<PlayerLooking>().zee);
-            //Debug.Log(camera.GetComponent<PlayerLooking>().why);
-            //Debug.Log(guy.rotation_y);
         }
     }
 

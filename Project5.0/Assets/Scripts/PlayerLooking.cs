@@ -90,40 +90,6 @@ public class PlayerLooking : MonoBehaviour
                 usage_target = null;
             }
         }
-
-        //if (Input.GetButton(PlayerPrefs.GetString("General Action")))
-        //{
-        //    try
-        //    {
-        //        usage_target = ReturnUsableObject();
-        //        usage_target.GetComponent<ObjectBehaviorDefault>().UseDefaultHold(held_object_anchor);
-
-        //        if (PlayerPrefs.GetString("togglehold_carry") == "toggle")
-        //        {
-        //            if (usage_target.tag == "Holdable" && held_thing == null)
-        //            {
-        //                held_thing = usage_target;
-        //            }
-        //            else if (held_thing == usage_target)
-        //            {7
-        //                held_thing = null;
-        //            }
-        //        }
-        //    }
-        //    catch (System.NullReferenceException e)
-        //    {
-        //        usage_target = null;
-        //    }
-        //}
-        //else
-        //{
-        //    if (usage_target != null)
-        //    {
-        //        usage_target.GetComponent<ObjectBehaviorDefault>().UseDefaultHoldRelease();
-        //        usage_target = null;
-        //        held_thing = null;
-        //    }
-        //}
     }
 
     private GameObject ReturnUsableObject()

@@ -65,8 +65,6 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
         if (held_object_anchor != null)
         {
             this.transform.position = Vector3.Lerp(this.transform.position, held_object_anchor.transform.position, 20f * Time.deltaTime);
-
-            //this.transform.rotation = Quaternion.Lerp(this.transform.rotation, held_object_anchor.transform.localRotation, 20f * Time.deltaTime);
         }
 
         if (held_object_anchor != null &&
