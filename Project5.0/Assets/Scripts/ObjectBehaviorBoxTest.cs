@@ -2,6 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * ObjectBehaviorBoxTest
+ * Author:          Andrew Potisk
+ * Finalized on:    --/--/----
+ * 
+ * Purpose:
+ * This script defines behavior exclusive to the object 'BoxTest'.
+ * 
+ * Notes:
+ * 
+ * Bugs:
+ */
 public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 {
     public GameObject held_object_anchor;
@@ -33,24 +45,6 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
             this.GetComponent<Rigidbody>().useGravity = true;
             this.GetComponent<Rigidbody>().freezeRotation = false;
             held_object_anchor = null;
-        }
-    }
-
-    public override void UseDefaultHold(GameObject new_anchor)
-    {
-        
-    }
-
-    public override void UseDefaultHoldRelease()
-    {
-        if (held_object_anchor != null)
-        {
-            held_object_anchor.transform.localRotation = new Quaternion(0, 0, 0, 0);
-
-            this.GetComponent<Rigidbody>().useGravity = true;
-            this.GetComponent<Rigidbody>().freezeRotation = false;
-            held_object_anchor = null;
-            Debug.Log("Detach " + held_object_anchor);
         }
     }
 
