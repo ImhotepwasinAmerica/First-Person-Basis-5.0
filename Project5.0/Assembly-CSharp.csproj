@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\MirrorProbe.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorDefault.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorSceneTransfer.cs" />
     <Compile Include="Assets\Scripts\PlayerLooking.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SavedObject.cs" />

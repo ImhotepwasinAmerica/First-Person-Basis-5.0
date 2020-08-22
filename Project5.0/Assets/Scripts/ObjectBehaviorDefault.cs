@@ -39,7 +39,6 @@ public class ObjectBehaviorDefault : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // GameEvents.current.SmartDelete += DestroyOrChange; // In case the first application of this line doesn't work
 
         GameEvents.current.DeleteAllTheThings += Destroy;
         GameEvents.current.SaveAllTheThings += SaveItem;
@@ -61,6 +60,18 @@ public class ObjectBehaviorDefault : MonoBehaviour
         }
 
         MoveAugment();
+
+        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            this.OnCollideWithPlayer(collision.gameObject);
+        }
+
+        this.OnCollideWithAnything(collision.gameObject);
     }
 
     public void SetObjectData(SavedObject new_object_data)
@@ -130,8 +141,6 @@ public class ObjectBehaviorDefault : MonoBehaviour
             + "/" + SceneManager.GetActiveScene().name
             + "/presentitems/" + this.gameObject.transform.position.sqrMagnitude + ".dat"))
         {
-            Debug.Log("Objectchanged");
-
             object_data = Serialization.Load<SavedObject>(Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot")
             + "/" + SceneManager.GetActiveScene().name
@@ -166,4 +175,8 @@ public class ObjectBehaviorDefault : MonoBehaviour
     public virtual void MoveAugment() { }
 
     public virtual void MakeVirtual() { }
+
+    public virtual void OnCollideWithPlayer(GameObject collided) { }
+
+    public virtual void OnCollideWithAnything(GameObject collided) { }
 }

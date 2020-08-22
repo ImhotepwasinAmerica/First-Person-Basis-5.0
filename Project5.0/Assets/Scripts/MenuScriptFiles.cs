@@ -22,7 +22,7 @@ using System.IO;
  * #Application.persistentDataPath#/saves/savedgames/#saveslot#/game
  * 
  * Savegame data regarding individual scenes:
- * #Application.persistentDataPath#/saves/savedgames/#saveslot#/#scene#/scene
+ * #Application.persistentDataPath#/saves/savedgames/#saveslot#/#scene#
  * 
  * Savegame data regarding item and NPCs in scenes:
  * #Application.persistentDataPath#/saves/savedgames/#saveslot#/#scene#/items/#item#
