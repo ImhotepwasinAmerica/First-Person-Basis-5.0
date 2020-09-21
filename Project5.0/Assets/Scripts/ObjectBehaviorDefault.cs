@@ -42,6 +42,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
         GameEvents.current.DeleteAllTheThings += Destroy;
         GameEvents.current.SaveAllTheThings += SaveItem;
+        GameEvents.current.SaveAllTheThingsAux += SaveItemAux;
 
         id = this.gameObject.transform.position.sqrMagnitude;
 
@@ -105,7 +106,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     public void HealthChange(int hit_strength)
     {
-        object_data.health += hit_strength;
+        object_data.ints[0] += hit_strength;
     }
 
     public void Destroy()
@@ -113,6 +114,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
         GameObject.Destroy(object_in_question);
     }
 
+    // The item's data (represented as 'object_data') is saved, either to the 'items' or 'presentitems' folder
     public void SaveItem()
     {
         if (is_original)
@@ -129,6 +131,24 @@ public class ObjectBehaviorDefault : MonoBehaviour
                 Application.persistentDataPath + "/saves/savedgames/"
                 + PlayerPrefs.GetString("saved_game_slot")
                 + "/" + SceneManager.GetActiveScene().name
+                + "/items/" + this.id + ".dat");
+        }
+    }
+
+    public void SaveItemAux()
+    {
+        if (is_original)
+        {
+            Serialization.Save<SavedObject>(object_data,
+                Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+                + SceneManager.GetActiveScene().name
+                + "/presentitems/" + this.id + ".dat"); // The instance ID serves as the name of the object data file in memory
+        }
+        else
+        {
+            Serialization.Save<SavedObject>(object_data,
+                Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+                + SceneManager.GetActiveScene().name
                 + "/items/" + this.id + ".dat");
         }
     }
@@ -175,6 +195,39 @@ public class ObjectBehaviorDefault : MonoBehaviour
     public virtual void MoveAugment() { }
 
     public virtual void MakeVirtual() { }
+
+    public virtual void InstantiateObjectData()
+    {
+        if (this.object_data == null)
+        {
+            this.object_data = new SavedObject();
+        }
+
+        if (this.object_data.ints == null)
+        {
+            this.object_data.ints = new List<int>();
+        }
+
+        if (this.object_data.floats == null)
+        {
+            this.object_data.floats = new List<float>();
+        }
+
+        if (this.object_data.strings == null)
+        {
+            this.object_data.strings = new List<string>();
+        }
+
+        if (this.object_data.bools == null)
+        {
+            this.object_data.bools = new List<bool>();
+        }
+
+        if (this.object_data.objects == null)
+        {
+            this.object_data.objects = new List<SavedObject>();
+        }
+    }
 
     public virtual void OnCollideWithPlayer(GameObject collided) { }
 

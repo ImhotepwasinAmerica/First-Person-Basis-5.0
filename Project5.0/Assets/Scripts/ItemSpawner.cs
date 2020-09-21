@@ -21,7 +21,7 @@ public class ItemSpawner : MonoBehaviour
         {
             item = item_stack.Pop();
 
-            thang = GameObject.Instantiate(Resources.Load<GameObject>(item.saved_thing),
+            thang = GameObject.Instantiate(Resources.Load<GameObject>(item.strings[0]),
                     new Vector3(item.position_x, item.position_y, item.position_z),
                     Quaternion.Euler(item.rotation_x, item.rotation_y, item.rotation_z));
 

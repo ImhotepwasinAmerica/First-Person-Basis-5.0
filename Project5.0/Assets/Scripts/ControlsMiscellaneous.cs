@@ -141,7 +141,7 @@ public class ControlsMiscellaneous : MonoBehaviour
             Application.persistentDataPath + "/saves/savedgames/"
             + data_container.GetComponent<DataContainer>().saved_game_slot + "/game.dat");
 
-        Serialization.Save<Character>(data_container.GetComponent<DataContainer>().character,
+        Serialization.Save<SavedObject>(data_container.GetComponent<DataContainer>().character,
             Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot") + "/character.dat");
 

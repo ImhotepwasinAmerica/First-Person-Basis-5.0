@@ -20,7 +20,7 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 
     public void DestroyOnDeath()
     {
-        int health = object_data.health;
+        int health = object_data.ints[0];
 
         if (health < 0)
         {
@@ -70,5 +70,13 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
             this.GetComponent<Rigidbody>().freezeRotation = false;
             held_object_anchor = null;
         }
+    }
+
+    public override void InstantiateObjectData()
+    {
+        base.InstantiateObjectData();
+        
+        object_data.ints[1] = 10;
+        object_data.ints[0] = 10;
     }
 }

@@ -13,6 +13,11 @@ public class MenuScriptMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // In the case that the game was terminated unexpectedly,
+        // the auxiliary save file may still be there. (it should be deleted on game exit)
+        // This is a precautionary measure. 
+        Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+
         if (!PlayerPrefs.HasKey("General Action"))
         {
             DeveloperPreferences.Keybinds();
@@ -46,21 +51,24 @@ public class MenuScriptMain : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             PlayerPrefs.SetString("saved_game_slot","new game");
-            data_container.GetComponent<DataContainer>().game = new Game();
-            data_container.GetComponent<DataContainer>().character = new Character();
+            Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+            
+            Serialization.Save<Game>(new Game(), Application.persistentDataPath + "/saves/savedgames/auxiliary/game.dat");
+            Serialization.Save<SavedObject>(new SavedObject(), Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
 
             LoadLevel01();
         }
         else
         {
             GameEvents.current.ResumeGame();
-            //some_controls.GetComponent<ControlsMiscellaneous>().Resume();
         }
     }
 
     public void QuitMainMenuAction()
     {
         Time.timeScale = 1f;
+
+        Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
@@ -70,6 +78,8 @@ public class MenuScriptMain : MonoBehaviour
         {
             LoadMainMenu();
         }
+
+        
     }
 
     public void LoadLevel01()
@@ -98,6 +108,8 @@ public class MenuScriptMain : MonoBehaviour
 
     public void QuitGame()
     {
+        Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+
         Application.Quit();
         Debug.Log("Quit");
     }

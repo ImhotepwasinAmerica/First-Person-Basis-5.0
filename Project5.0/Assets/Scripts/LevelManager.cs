@@ -13,50 +13,73 @@ using UnityEngine.SceneManagement;
  * Notes:
  * 
  * Bugs:
+ * If the 'auxiliary' save slot has not been filled with the proper data, this entire operation will not work.
  */
 public class LevelManager : MonoBehaviour
 {
     public GameObject data_container, character, camera;
 
     private Vector3 character_position, character_rotation;
-    private Character guy;
+    private SavedObject guy;
 
     public void Awake()
     {
-        if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/" +
-            PlayerPrefs.GetString("saved_game_slot") + "/game.dat"))
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
+        // If the directory which holds the current scene's data does not exist,
+        // it is created.
+        if (!Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name))
+        {
+            Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name);
+        }
+
+        // Just in case either the 'items' or 'presentitems' directories do not exist for the current scene in the 'auxiliary' save slot,
+        // they are created here.
+        if (!Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/items"))
+        {
+            Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/items");
+        }
+
+        if (!Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/presentitems"))
+        {
+            Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/presentitems");
+        }
+
+        if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/game.dat"))
         {
             data_container.GetComponent<DataContainer>().game =
-                Serialization.Load<Game>(Application.persistentDataPath + "/saves/savedgames/" +
-                PlayerPrefs.GetString("saved_game_slot") + "/game.dat");
+                Serialization.Load<Game>(Application.persistentDataPath + "/saves/savedgames/auxiliary/game.dat");
         }
         else
         {
             data_container.GetComponent<DataContainer>().game = new Game();
+            Serialization.Save<Game>(data_container.GetComponent<DataContainer>().game, Application.persistentDataPath + "/saves/savedgames/auxiliary/game.dat");
         }
 
-        if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/" +
-            PlayerPrefs.GetString("saved_game_slot") + "/" + SceneManager.GetActiveScene().name + "/scene.dat"))
+        if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name + "/scene.dat"))
         {
             data_container.GetComponent<DataContainer>().scene =
-                Serialization.Load<Scene>(Application.persistentDataPath + "/saves/savedgames/" +
-                PlayerPrefs.GetString("saved_game_slot") + "/" + SceneManager.GetActiveScene().name + "/scene.dat");
-        }
-        else
-        {
-            data_container.GetComponent<DataContainer>().character = new Character();
-        }
-        
-        if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/" +
-            PlayerPrefs.GetString("saved_game_slot") + "/character.dat"))
-        {
-            data_container.GetComponent<DataContainer>().character =
-                Serialization.Load<Character>(Application.persistentDataPath + "/saves/savedgames/" +
-                PlayerPrefs.GetString("saved_game_slot") + "/character.dat");
+                Serialization.Load<Scene>(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name + "/scene.dat");
         }
         else
         {
             data_container.GetComponent<DataContainer>().scene = new Scene();
+            Serialization.Save<Scene>(data_container.GetComponent<DataContainer>().scene, Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name + "/scene.dat");
+        }
+        
+        if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat"))
+        {
+            data_container.GetComponent<DataContainer>().character =
+                Serialization.Load<SavedObject>(Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
+        }
+        else
+        {
+            data_container.GetComponent<DataContainer>().character = new SavedObject();
+            Serialization.Save<SavedObject>(data_container.GetComponent<DataContainer>().character, Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
         }
         
 
@@ -74,6 +97,8 @@ public class LevelManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         guy = data_container.GetComponent<DataContainer>().character;
+
+        data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
 
         if (data_container.GetComponent<DataContainer>().character.rotation_x != null
             && Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/"

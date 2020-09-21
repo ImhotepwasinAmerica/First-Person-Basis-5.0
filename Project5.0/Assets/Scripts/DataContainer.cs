@@ -12,7 +12,7 @@ public class DataContainer : MonoBehaviour
     public string saved_game_slot, saved_game_scene;
 
     public Game game;
-    public Character character;
+    public SavedObject character;
     public Scene scene;
     public Vector3 character_spawn_location;
 

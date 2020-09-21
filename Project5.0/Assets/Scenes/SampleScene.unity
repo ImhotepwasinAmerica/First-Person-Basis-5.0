@@ -5909,6 +5909,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7106987432785218674, guid: 15353cb58a7183b46b174cd1dbefb4bb,
         type: 3}
+      propertyPath: object_data.ints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106987432785218674, guid: 15353cb58a7183b46b174cd1dbefb4bb,
+        type: 3}
       propertyPath: data_container
       value: 
       objectReference: {fileID: 345501918}
@@ -44218,29 +44223,23 @@ MonoBehaviour:
   object_in_question: {fileID: 0}
   data_container: {fileID: 0}
   object_data:
-    saved_thing: 
-    saved_thing_virtual: 
     rotation_x: 0
     rotation_y: 0
     rotation_z: 0
     position_x: 0
     position_y: 0
     position_z: 0
-    health: 0
-    max_health: 0
-    weight: 0
-    invincible: 0
-    switch_on: 0
-    weapon_ammo_count: 0
     ints: 
     floats: []
     strings: []
+    bools: 
     objects: []
   has_been_interacted: 0
   is_original: 0
   id: 0
   scene_name: SampleScene2
   activate_or_collide: collide
+  spawn_location: {x: 0, y: 0, z: 0}
 --- !u!1 &2041022717
 GameObject:
   m_ObjectHideFlags: 0

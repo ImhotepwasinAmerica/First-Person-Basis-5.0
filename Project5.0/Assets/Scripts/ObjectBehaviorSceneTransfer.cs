@@ -76,21 +76,7 @@ public class ObjectBehaviorSceneTransfer : ObjectBehaviorDefault
     // any changed data concerning that scene will be lost.
     public void SaveAuxiliary()
     {
-        string slot = "auxiliary";
-
-        PlayerPrefs.SetString("saved_game_slot", slot);
-
-        // If a saved game has files stored in a different slot than what is being saved to, those files will be transferred over to the new slot, in their equivalent directories.
-        if (data_container.GetComponent<DataContainer>().saved_game_slot != "new game")
-        {
-            UnityEditor.FileUtil.CopyFileOrDirectory(
-                Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
-                Application.persistentDataPath + "/saves/savedgames/" + slot);
-        }
-        else
-        {
-            data_container.GetComponent<DataContainer>().saved_game_slot = slot;
-        }
+        PlayerPrefs.SetString("saved_game_slot", "auxiliary");
 
         // If the directory to which the data must be saved does not exist,
         // said directory is created.
@@ -109,7 +95,7 @@ public class ObjectBehaviorSceneTransfer : ObjectBehaviorDefault
             Application.persistentDataPath + "/saves/savedgames/"
             + data_container.GetComponent<DataContainer>().saved_game_slot + "/game.dat");
 
-        Serialization.Save<Character>(data_container.GetComponent<DataContainer>().character,
+        Serialization.Save<SavedObject>(data_container.GetComponent<DataContainer>().character,
             Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot") + "/character.dat");
 
@@ -120,9 +106,6 @@ public class ObjectBehaviorSceneTransfer : ObjectBehaviorDefault
             + "/" + SceneManager.GetActiveScene().name + "/scene.dat");
 
         // The items in the current scene are saved
-        GameEvents.current.SaveAllItems();
-
-        //Debug.Log(data_container.GetComponent<DataContainer>().character.position_x);
-        //Debug.Log(data_container.GetComponent<DataContainer>().game.current_scene_name);
+        GameEvents.current.SaveAllItemsAux();
     }
 }
