@@ -28,6 +28,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
     {
         try // Make sure the GameEvents script is placed earlier in the script execution order than this.
         {
+            Debug.Log("Is this called before DeleteSmartly, or after?");
             GameEvents.current.SmartDelete += DestroyOrChange; // This must run before DeleteSmartly is called
         }
         catch (System.NullReferenceException e)
@@ -39,6 +40,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
         GameEvents.current.DeleteAllTheThings += Destroy;
         GameEvents.current.SaveAllTheThings += SaveItem;
@@ -52,6 +54,8 @@ public class ObjectBehaviorDefault : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
         if (this.gameObject != null
             && data_container != null
             && object_data != null)
@@ -61,18 +65,24 @@ public class ObjectBehaviorDefault : MonoBehaviour
         }
 
         MoveAugment();
-
-        
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            this.OnCollideWithPlayer(collision.gameObject);
+            OnCollideWithPlayer(collision.gameObject);
         }
 
-        this.OnCollideWithAnything(collision.gameObject);
+        OnCollideWithAnything(collision.gameObject);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            OnCollideWithPlayer(other.gameObject);
+        }
     }
 
     public void SetObjectData(SavedObject new_object_data)
@@ -151,10 +161,14 @@ public class ObjectBehaviorDefault : MonoBehaviour
                 + SceneManager.GetActiveScene().name
                 + "/items/" + this.id + ".dat");
         }
+
+        Debug.Log("Item saved: " + this.gameObject.transform.position.sqrMagnitude);
     }
 
     public void DestroyOrChange()
     {
+        Debug.Log("Item affected: " + this.gameObject.transform.position.sqrMagnitude);
+
         if (Serialization.SaveExists(
             Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot")
@@ -180,6 +194,8 @@ public class ObjectBehaviorDefault : MonoBehaviour
         {
             GameObject.Destroy(object_in_question);
         }
+
+        
     }
 
     public virtual void UseDefault(GameObject thing) { }

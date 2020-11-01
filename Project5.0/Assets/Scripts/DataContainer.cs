@@ -28,18 +28,18 @@ public class DataContainer : MonoBehaviour
             if (alla_deeze[i] != this.gameObject)
             {
                 // No variables yet
-                this.saved_game_slot = alla_deeze[i].GetComponent<DataContainer>().saved_game_slot;
-                this.saved_game_scene = alla_deeze[i].GetComponent<DataContainer>().saved_game_scene;
-                this.game = alla_deeze[i].GetComponent<DataContainer>().game;
-                this.character = alla_deeze[i].GetComponent<DataContainer>().character;
-                this.scene = alla_deeze[i].GetComponent<DataContainer>().scene;
-                this.character_spawn_location = alla_deeze[i].GetComponent<DataContainer>().character_spawn_location;
+                //this.saved_game_slot = alla_deeze[i].GetComponent<DataContainer>().saved_game_slot;
+                //this.saved_game_scene = alla_deeze[i].GetComponent<DataContainer>().saved_game_scene;
+                //this.game = alla_deeze[i].GetComponent<DataContainer>().game;
+                //this.character = alla_deeze[i].GetComponent<DataContainer>().character;
+                //this.scene = alla_deeze[i].GetComponent<DataContainer>().scene;
+                //this.character_spawn_location = alla_deeze[i].GetComponent<DataContainer>().character_spawn_location;
 
-                Destroy(alla_deeze[i]);
+                //Destroy(alla_deeze[i]);
             }
         }
 
-        Object.DontDestroyOnLoad(transform.gameObject);
+        //Object.DontDestroyOnLoad(transform.gameObject);
     }
 
     // Update is called once per frame

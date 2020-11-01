@@ -26,11 +26,7 @@ public class PlayerLooking : MonoBehaviour
 
         usage_target = null;
         held_thing = null;
-
-        //ex = data_container.GetComponent<DataContainer>().character.rotation_x;
-        //why = data_container.GetComponent<DataContainer>().character.rotation_y;
-        //zee = data_container.GetComponent<DataContainer>().character.rotation_z;
-
+        
         LoadRotation();
     }
 

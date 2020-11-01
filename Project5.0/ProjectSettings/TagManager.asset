@@ -7,6 +7,7 @@ TagManager:
   - DataContainer
   - Holdable
   - LevelTransferSlider
+  - CameraBackup
   layers:
   - Default
   - TransparentFX

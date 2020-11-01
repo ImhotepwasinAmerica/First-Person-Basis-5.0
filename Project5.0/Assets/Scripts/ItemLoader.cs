@@ -15,14 +15,16 @@ public class ItemLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
         has_been_created = false;
 
         if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/"
-            + PlayerPrefs.GetString("saved_game_slot")
+            + data_container.GetComponent<DataContainer>().game.saveslot_label
             + "/" + SceneManager.GetActiveScene().name))
         {
             files = Directory.GetFiles(Application.persistentDataPath + "/saves/savedgames/"
-            + PlayerPrefs.GetString("saved_game_slot")
+            + data_container.GetComponent<DataContainer>().game.saveslot_label
             + "/" + SceneManager.GetActiveScene().name
             + "/items");
 
@@ -34,7 +36,7 @@ public class ItemLoader : MonoBehaviour
                 {
                     item_spawner.GetComponent<ItemSpawner>().item_stack.Push(Serialization.Load<SavedObject>(
                         Application.persistentDataPath + "/saves/savedgames/"
-                    + PlayerPrefs.GetString("saved_game_slot")
+                    + data_container.GetComponent<DataContainer>().game.saveslot_label
                     + "/" + SceneManager.GetActiveScene().name
                     + "/items/" + files[index]));
 

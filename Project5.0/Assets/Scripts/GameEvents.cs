@@ -87,6 +87,7 @@ public class GameEvents : MonoBehaviour
     {
         if (SmartDelete != null)
         {
+            Debug.Log("Got this far...");
             SmartDelete();
         }
     }

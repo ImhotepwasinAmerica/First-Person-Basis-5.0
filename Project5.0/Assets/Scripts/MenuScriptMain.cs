@@ -13,10 +13,13 @@ public class MenuScriptMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // In the case that the game was terminated unexpectedly,
-        // the auxiliary save file may still be there. (it should be deleted on game exit)
-        // This is a precautionary measure. 
-        Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            // In the case that the game was terminated unexpectedly,
+            // the auxiliary save file may still be there. (it should be deleted on game exit)
+            // This is a precautionary measure. 
+            Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        }
 
         if (!PlayerPrefs.HasKey("General Action"))
         {
@@ -54,7 +57,13 @@ public class MenuScriptMain : MonoBehaviour
             Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
             
             Serialization.Save<Game>(new Game(), Application.persistentDataPath + "/saves/savedgames/auxiliary/game.dat");
-            Serialization.Save<SavedObject>(new SavedObject(), Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
+
+            SavedObject character = new SavedObject();
+            character.position_x = 6;
+            character.position_y = 1.1f;
+            character.position_z = 4;
+
+            Serialization.Save<SavedObject>(character, Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
 
             LoadLevel01();
         }
@@ -108,7 +117,6 @@ public class MenuScriptMain : MonoBehaviour
 
     public void QuitGame()
     {
-        Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
 
         Application.Quit();
         Debug.Log("Quit");

@@ -124,6 +124,7 @@ public class MenuScriptFiles : MonoBehaviour
     public void SetSlot(string slot)
     {
         PlayerPrefs.SetString("saved_game_slot", slot);
+        //Serialization.Load<Game>(Application.persistentDataPath + "/saves/savedgames/" + slot + "/game.dat").saveslot_label = slot;
     }
 
     public void SetScene()
@@ -133,6 +134,10 @@ public class MenuScriptFiles : MonoBehaviour
 
     public void LoadInfo()
     {
+        if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary"))
+        {
+            UnityEditor.FileUtil.DeleteFileOrDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        }
 
         UnityEditor.FileUtil.CopyFileOrDirectory(
                 Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
@@ -174,38 +179,29 @@ public class MenuScriptFiles : MonoBehaviour
         Open_Menu_Page(main_menu);
     }
 
+    // The save data is initially saved into the 'auxiliary' slot,
+    // similar to what happens when the scene is changed,
+    // which is then copied over to the indicated slot.
     public void SaveButton(string slot)
     {
-        PlayerPrefs.SetString("saved_game_slot", slot);
+        // Just in case either the 'items' or 'presentitems' directories do not exist for the current scene in the 'auxiliary' save slot,
+        // they are created here.
+        if (!Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/items"))
+        {
+            Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/items");
+        }
 
-        //// Just in case either the 'items' or 'presentitems' directories do not exist for the current scene in the 'auxiliary' save slot,
-        //// they are created here.
-        //if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
-        //    + "/items"))
-        //{
-        //    Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
-        //    + "/items");
-        //}
-        
-        //if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
-        //    + "/presentitems"))
-        //{
-        //    Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
-        //    + "/presentitems");
-        //}
-        
-        // If the directory to which the data must be saved does not exist,
-        // said directory is created.
-        //Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/" 
-        //    + PlayerPrefs.GetString("saved_game_slot")
-        //    + "/" + SceneManager.GetActiveScene().name
-        //    + "/presentitems");
+        if (!Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/presentitems"))
+        {
+            Serialization.CreateDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+            + "/presentitems");
+        }
 
-        
-
-        // The save data is initially saved into the 'auxiliary' slot,
-        // similar to what happens when the scene is changed,
-        // which is then copied over to the indicated slot.
+        // The 'game' object's reference to the save file name is set.
+        data_container.GetComponent<DataContainer>().game.saveslot_label = slot;
 
         // The essential data of the game is saved.
         Serialization.Save<Game>(data_container.GetComponent<DataContainer>().game,
@@ -223,7 +219,7 @@ public class MenuScriptFiles : MonoBehaviour
 
         UnityEditor.FileUtil.CopyFileOrDirectory(
                 Application.persistentDataPath + "/saves/savedgames/auxiliary",
-                Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"));
+                Application.persistentDataPath + "/saves/savedgames/" + slot);
     }
 
     public void EstablishDate(Text text)
