@@ -10,6 +10,7 @@ using System.IO;
  * MenuScriptFiles
  * Author:          Andrew Potisk
  * Finalized on:    --/--/----
+ * 
  * Purpose:
  * These scripts handle all operations on the game files menu.
  * 

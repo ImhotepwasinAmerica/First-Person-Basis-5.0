@@ -7,7 +7,7 @@ public class GameEvents : MonoBehaviour
 {
     public static GameEvents current;
 
-    public event Action DeleteAllTheThings, SaveAllTheThings, SmartDelete, LoadCharacterStance, LoadCharacterRotation;
+    public event Action DeleteAllTheThings, SaveAllTheThings, SmartDelete, LoadCharacterStance, LoadCharacterRotation, Pause, Resume;
     public event Action<int> DoorwayOpen, DoorwayClose;
 
     private void Awake()
@@ -25,6 +25,22 @@ public class GameEvents : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PauseGame()
+    {
+        if (Pause != null)
+        {
+            Pause();
+        }
+    }
+
+    public void ResumeGame()
+    {
+        if (Resume != null)
+        {
+            Resume();
+        }
     }
 
     public void DeleteAllItems()

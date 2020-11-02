@@ -53,7 +53,8 @@ public class MenuScriptMain : MonoBehaviour
         }
         else
         {
-            some_controls.GetComponent<ControlsMiscellaneous>().Resume();
+            GameEvents.current.ResumeGame();
+            //some_controls.GetComponent<ControlsMiscellaneous>().Resume();
         }
     }
 

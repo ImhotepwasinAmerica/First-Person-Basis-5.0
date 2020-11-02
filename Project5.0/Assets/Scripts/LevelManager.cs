@@ -2,7 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+/*
+ * LevelManager
+ * Author:          Andrew Potisk
+ * Finalized on:    --/--/----
+ * 
+ * Purpose:
+ * This script handles a variety of loading processes, most notably the character's data.
+ * 
+ * Notes:
+ * 
+ * Bugs:
+ */
 public class LevelManager : MonoBehaviour
 {
     public GameObject data_container, character, camera;
@@ -58,11 +69,11 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
         Cursor.lockState = CursorLockMode.Locked;
 
         guy = data_container.GetComponent<DataContainer>().character;
-        //Debug.Log(guy.rotation_y);
 
         if (data_container.GetComponent<DataContainer>().character.rotation_x != null
             && Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/"
@@ -70,18 +81,14 @@ public class LevelManager : MonoBehaviour
         {
             GameObject.Destroy(character);
 
-            character = GameObject.Instantiate(Resources.Load<GameObject>("Character"),
+            character = GameObject.Instantiate(Resources.Load<GameObject>("Character 1"),
                         new Vector3(guy.position_x, guy.position_y, guy.position_z),
-                        Quaternion.Euler(guy.rotation_x, guy.rotation_y, guy.rotation_z)); // Does not actually accept
+                        Quaternion.Euler(guy.rotation_x, guy.rotation_y, guy.rotation_z));
 
             camera = GameObject.FindGameObjectWithTag("MainCamera");
             camera.GetComponent<PlayerLooking>().ex = guy.rotation_x;
             camera.GetComponent<PlayerLooking>().why = guy.rotation_y;
             camera.GetComponent<PlayerLooking>().zee = guy.rotation_z;
-
-            //Debug.Log(camera.GetComponent<PlayerLooking>().zee);
-            //Debug.Log(camera.GetComponent<PlayerLooking>().why);
-            //Debug.Log(guy.rotation_y);
         }
     }
 
@@ -93,6 +100,8 @@ public class LevelManager : MonoBehaviour
 
     void FixedUpdate()
     {
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
         camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         character_position = character.transform.position;
@@ -105,7 +114,5 @@ public class LevelManager : MonoBehaviour
         guy.rotation_x = character_rotation.x;
         guy.rotation_y = character_rotation.y;
         guy.rotation_z = character_rotation.z;
-
-        //Debug.Log(guy.rotation_y);
     }
 }
