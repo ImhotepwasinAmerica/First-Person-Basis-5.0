@@ -7,7 +7,7 @@ public class GameEvents : MonoBehaviour
 {
     public static GameEvents current;
 
-    public event Action DeleteAllTheThings, SaveAllTheThings, SmartDelete, LoadCharacterStance, LoadCharacterRotation, Pause, Resume;
+    public event Action DeleteAllTheThings, SaveAllTheThings, SaveAllTheThingsAux, SmartDelete, LoadCharacterStance, LoadCharacterRotation, Pause, Resume;
     public event Action<int> DoorwayOpen, DoorwayClose;
 
     private void Awake()
@@ -59,6 +59,14 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public void SaveAllItemsAux()
+    {
+        if (SaveAllTheThingsAux != null)
+        {
+            SaveAllTheThingsAux();
+        }
+    }
+
     public void OpenTheDoor(int num)
     {
         if(DoorwayOpen != null)
@@ -79,6 +87,7 @@ public class GameEvents : MonoBehaviour
     {
         if (SmartDelete != null)
         {
+            Debug.Log("Got this far...");
             SmartDelete();
         }
     }

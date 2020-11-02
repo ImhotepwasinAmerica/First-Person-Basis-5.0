@@ -84,11 +84,13 @@
     <Compile Include="Assets\Scripts\MirrorProbe.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorDefault.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorSceneTransfer.cs" />
     <Compile Include="Assets\Scripts\PlayerLooking.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SavedObject.cs" />
     <Compile Include="Assets\Scripts\Scene.cs" />
     <Compile Include="Assets\Scripts\Serialization.cs" />
+    <Compile Include="Assets\Scripts\Universals.cs" />
     <Compile Include="Assets\Scripts\VirtualObject.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />

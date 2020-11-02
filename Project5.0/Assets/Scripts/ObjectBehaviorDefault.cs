@@ -28,6 +28,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
     {
         try // Make sure the GameEvents script is placed earlier in the script execution order than this.
         {
+            Debug.Log("Is this called before DeleteSmartly, or after?");
             GameEvents.current.SmartDelete += DestroyOrChange; // This must run before DeleteSmartly is called
         }
         catch (System.NullReferenceException e)
@@ -39,10 +40,11 @@ public class ObjectBehaviorDefault : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // GameEvents.current.SmartDelete += DestroyOrChange; // In case the first application of this line doesn't work
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
         GameEvents.current.DeleteAllTheThings += Destroy;
         GameEvents.current.SaveAllTheThings += SaveItem;
+        GameEvents.current.SaveAllTheThingsAux += SaveItemAux;
 
         id = this.gameObject.transform.position.sqrMagnitude;
 
@@ -52,6 +54,8 @@ public class ObjectBehaviorDefault : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
         if (this.gameObject != null
             && data_container != null
             && object_data != null)
@@ -61,6 +65,24 @@ public class ObjectBehaviorDefault : MonoBehaviour
         }
 
         MoveAugment();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            OnCollideWithPlayer(collision.gameObject);
+        }
+
+        OnCollideWithAnything(collision.gameObject);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            OnCollideWithPlayer(other.gameObject);
+        }
     }
 
     public void SetObjectData(SavedObject new_object_data)
@@ -94,7 +116,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     public void HealthChange(int hit_strength)
     {
-        object_data.health += hit_strength;
+        object_data.ints[0] += hit_strength;
     }
 
     public void Destroy()
@@ -102,6 +124,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
         GameObject.Destroy(object_in_question);
     }
 
+    // The item's data (represented as 'object_data') is saved, either to the 'items' or 'presentitems' folder
     public void SaveItem()
     {
         if (is_original)
@@ -122,16 +145,36 @@ public class ObjectBehaviorDefault : MonoBehaviour
         }
     }
 
+    public void SaveItemAux()
+    {
+        if (is_original)
+        {
+            Serialization.Save<SavedObject>(object_data,
+                Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+                + SceneManager.GetActiveScene().name
+                + "/presentitems/" + this.id + ".dat"); // The instance ID serves as the name of the object data file in memory
+        }
+        else
+        {
+            Serialization.Save<SavedObject>(object_data,
+                Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+                + SceneManager.GetActiveScene().name
+                + "/items/" + this.id + ".dat");
+        }
+
+        Debug.Log("Item saved: " + this.gameObject.transform.position.sqrMagnitude);
+    }
+
     public void DestroyOrChange()
     {
+        Debug.Log("Item affected: " + this.gameObject.transform.position.sqrMagnitude);
+
         if (Serialization.SaveExists(
             Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot")
             + "/" + SceneManager.GetActiveScene().name
             + "/presentitems/" + this.gameObject.transform.position.sqrMagnitude + ".dat"))
         {
-            Debug.Log("Objectchanged");
-
             object_data = Serialization.Load<SavedObject>(Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot")
             + "/" + SceneManager.GetActiveScene().name
@@ -151,6 +194,8 @@ public class ObjectBehaviorDefault : MonoBehaviour
         {
             GameObject.Destroy(object_in_question);
         }
+
+        
     }
 
     public virtual void UseDefault(GameObject thing) { }
@@ -166,4 +211,41 @@ public class ObjectBehaviorDefault : MonoBehaviour
     public virtual void MoveAugment() { }
 
     public virtual void MakeVirtual() { }
+
+    public virtual void InstantiateObjectData()
+    {
+        if (this.object_data == null)
+        {
+            this.object_data = new SavedObject();
+        }
+
+        if (this.object_data.ints == null)
+        {
+            this.object_data.ints = new List<int>();
+        }
+
+        if (this.object_data.floats == null)
+        {
+            this.object_data.floats = new List<float>();
+        }
+
+        if (this.object_data.strings == null)
+        {
+            this.object_data.strings = new List<string>();
+        }
+
+        if (this.object_data.bools == null)
+        {
+            this.object_data.bools = new List<bool>();
+        }
+
+        if (this.object_data.objects == null)
+        {
+            this.object_data.objects = new List<SavedObject>();
+        }
+    }
+
+    public virtual void OnCollideWithPlayer(GameObject collided) { }
+
+    public virtual void OnCollideWithAnything(GameObject collided) { }
 }

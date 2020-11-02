@@ -15,14 +15,13 @@ public class PlayerMovement : MonoBehaviour
     private Transform transformation;
     private CharacterController controller;
     private CapsuleCollider collider;
-    private Character guy;
+    private SavedObject guy;
 
     // Start is called before the first frame update
     void Start()
     {
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
-
-        guy = data_container.GetComponent<DataContainer>().character;
+        guy = Serialization.Load<SavedObject>(Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
 
         transformation = GetComponent<Transform>();
         controller = GetComponent<CharacterController>();

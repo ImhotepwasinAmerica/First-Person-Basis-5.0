@@ -36003,6 +36003,7 @@ MonoBehaviour:
     position_x: 0
     position_y: 0
     position_z: 0
+  character_spawn_location: {x: 0, y: 0, z: 0}
 --- !u!1 &1814631092
 GameObject:
   m_ObjectHideFlags: 0
