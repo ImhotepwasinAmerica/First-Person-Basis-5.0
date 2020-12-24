@@ -217,6 +217,11 @@ public class MenuScriptFiles : MonoBehaviour
         // The items in the current scene are saved
         GameEvents.current.SaveAllItemsAux();
 
+        if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/" + slot))
+        {
+            Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/" + slot);
+        }
+
         UnityEditor.FileUtil.CopyFileOrDirectory(
                 Application.persistentDataPath + "/saves/savedgames/auxiliary",
                 Application.persistentDataPath + "/saves/savedgames/" + slot);

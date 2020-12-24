@@ -141,8 +141,6 @@ public class LevelManager : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("CameraBackup").SetActive(false);
 
-        Debug.Log("Character spawned");
-
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         camera.GetComponent<PlayerLooking>().ex = guy.rotation_x;
         camera.GetComponent<PlayerLooking>().why = guy.rotation_y;

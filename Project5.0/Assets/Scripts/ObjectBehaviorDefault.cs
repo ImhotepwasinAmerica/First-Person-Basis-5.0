@@ -26,15 +26,19 @@ public class ObjectBehaviorDefault : MonoBehaviour
 */
     private void Awake()
     {
+        id = this.gameObject.transform.position.sqrMagnitude;
+        Debug.Log("Item ID created: " + id);
+
         try // Make sure the GameEvents script is placed earlier in the script execution order than this.
         {
-            Debug.Log("Is this called before DeleteSmartly, or after?");
             GameEvents.current.SmartDelete += DestroyOrChange; // This must run before DeleteSmartly is called
         }
         catch (System.NullReferenceException e)
         {
             Debug.Log("Event system not found.");
         }
+
+        
     }
 
     // Start is called before the first frame update
@@ -46,7 +50,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
         GameEvents.current.SaveAllTheThings += SaveItem;
         GameEvents.current.SaveAllTheThingsAux += SaveItemAux;
 
-        id = this.gameObject.transform.position.sqrMagnitude;
+        
 
         is_original = true;
     }
@@ -162,23 +166,23 @@ public class ObjectBehaviorDefault : MonoBehaviour
                 + "/items/" + this.id + ".dat");
         }
 
-        Debug.Log("Item saved: " + this.gameObject.transform.position.sqrMagnitude);
+        Debug.Log("Item saved: " + this.id);
     }
 
     public void DestroyOrChange()
     {
-        Debug.Log("Item affected: " + this.gameObject.transform.position.sqrMagnitude);
+        Debug.Log("Item affected: " + this.id);
 
         if (Serialization.SaveExists(
-            Application.persistentDataPath + "/saves/savedgames/"
-            + PlayerPrefs.GetString("saved_game_slot")
-            + "/" + SceneManager.GetActiveScene().name
-            + "/presentitems/" + this.gameObject.transform.position.sqrMagnitude + ".dat"))
+            Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+            + SceneManager.GetActiveScene().name
+            + "/presentitems/" + this.id + ".dat"))
         {
-            object_data = Serialization.Load<SavedObject>(Application.persistentDataPath + "/saves/savedgames/"
-            + PlayerPrefs.GetString("saved_game_slot")
-            + "/" + SceneManager.GetActiveScene().name
-            + "/presentitems/" + this.gameObject.transform.position.sqrMagnitude + ".dat");
+            object_data = Serialization.Load<SavedObject>(Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+            + SceneManager.GetActiveScene().name
+            + "/presentitems/" + this.id + ".dat");
+
+            Debug.Log(object_data == null);
 
             this.gameObject.transform.rotation = Quaternion.Euler(
                 object_data.rotation_x,
@@ -192,6 +196,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
         }
         else
         {
+            Debug.Log("Item destroyed: " + this.id);
             GameObject.Destroy(object_in_question);
         }
 
