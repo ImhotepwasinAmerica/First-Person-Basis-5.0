@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed, jump_takeoff_speed, height_standing, height_squatting, lean_distance, distance_to_ground, speed_multiplier_squatting;
 
     private Vector3 velocity, velocity_endgoal;
-    private float angular_speed, gravity_fake, time_fake, acceleration;
+    private float angular_speed, gravity_fake, time_fake, acceleration, squat_toggle_timer;
     private bool is_squatting, is_walking, current_grounded, previous_grounded;
     private Quaternion lean;
 
@@ -45,28 +45,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //data_container = GameObject.FindGameObjectWithTag("DataContainer");
-
-        //Walk();
-
-        //ApplyGravity();
-
-        //BetterMovement();
-
-        //Jump();
-
-        //CycaBlyat();
-
-        //MovementLean();
-
-        //ControlLean();
-
-        //WalkRun();
-
-        //velocity_endgoal = transformation.rotation * velocity_endgoal;
-
-        //previous_grounded = current_grounded;
-        //current_grounded = IsGrounded();
+        
     }
 
     void FixedUpdate()
@@ -275,15 +254,25 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (PlayerPrefs.GetString("togglehold_squat") == "toggle")
         {
-            if (Input.GetButtonDown(PlayerPrefs.GetString("Squat")))
+            if (Input.GetButton(PlayerPrefs.GetString("Squat"))
+                || Input.GetButtonDown(PlayerPrefs.GetString("Squat")))
             {
-                if (!is_squatting)
+                if(squat_toggle_timer == null)
                 {
-                    is_squatting = true;
+                    squat_toggle_timer = Time.time;
                 }
-                else if (is_squatting)
+                else if (squat_toggle_timer < Time.time - 0.4)
                 {
-                    is_squatting = false;
+                    if (!is_squatting)
+                    {
+                        is_squatting = true;
+                    }
+                    else if (is_squatting)
+                    {
+                        is_squatting = false;
+                    }
+
+                    squat_toggle_timer = Time.time;
                 }
             }
 

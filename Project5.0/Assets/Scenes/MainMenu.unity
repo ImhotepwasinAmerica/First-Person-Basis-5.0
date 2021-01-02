@@ -35990,12 +35990,11 @@ MonoBehaviour:
     position_x: 0
     position_y: 0
     position_z: 0
-    health: 0
-    max_health: 0
-    weight: 0
-    invincible: 0
-    weapon_ammo_count: 0
-    toolbelt: []
+    ints: 
+    floats: []
+    strings: []
+    bools: 
+    objects: []
   scene:
     rotation_x: 0
     rotation_y: 0

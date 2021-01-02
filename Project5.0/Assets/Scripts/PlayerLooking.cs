@@ -66,7 +66,7 @@ public class PlayerLooking : MonoBehaviour
     {
         if (Input.GetButtonDown(PlayerPrefs.GetString("General Action")))
         {
-            Debug.Log(Application.persistentDataPath);
+            //Debug.Log(Application.persistentDataPath);
 
             try
             {

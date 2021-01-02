@@ -77,8 +77,12 @@ public class ObjectBehaviorDefault : MonoBehaviour
         {
             OnCollideWithPlayer(collision.gameObject);
         }
+        else
+        {
+            OnCollideWithAnything(collision.gameObject);
+        }
 
-        OnCollideWithAnything(collision.gameObject);
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -86,6 +90,10 @@ public class ObjectBehaviorDefault : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             OnCollideWithPlayer(other.gameObject);
+        }
+        else
+        {
+            OnCollideWithAnything(other.gameObject);
         }
     }
 

@@ -63,6 +63,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Character.cs" />
+    <Compile Include="Assets\Scripts\CharacterActionDetector.cs" />
+    <Compile Include="Assets\Scripts\CharacterBehaviorExecutor.cs" />
     <Compile Include="Assets\Scripts\ControlsMiscellaneous.cs" />
     <Compile Include="Assets\Scripts\DataContainer.cs" />
     <Compile Include="Assets\Scripts\DeveloperPreferences.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorDefault.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorSceneTransfer.cs" />
+    <Compile Include="Assets\Scripts\PlayerInputDetector.cs" />
     <Compile Include="Assets\Scripts\PlayerLooking.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\SavedObject.cs" />
