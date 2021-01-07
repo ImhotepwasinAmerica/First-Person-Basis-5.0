@@ -394,9 +394,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 6a420000
+      m_SelectedIDs: 04310000
       m_LastClickedID: 0
-      m_ExpandedIDs: d4e7ffff90f9ffff5efbffff
+      m_ExpandedIDs: 6afbffffc4340000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -600,19 +600,19 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\potis\Documents\GitHub\First-Person-Basis-5.0\Project5.0
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 64420000
-    m_LastClickedID: 16996
+    m_SelectedIDs: 66420000
+    m_LastClickedID: 16998
     m_ExpandedIDs: 000000005c42000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -666,8 +666,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 6a420000
-    m_LastClickedInstanceID: 17002
+    m_SelectedInstanceIDs: 04310000
+    m_LastClickedInstanceID: 12548
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
@@ -693,7 +693,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 60}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 115

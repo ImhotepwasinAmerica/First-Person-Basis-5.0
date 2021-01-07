@@ -8,7 +8,7 @@ public class PlayerLooking : MonoBehaviour
 
     public GameObject held_object_anchor, character, data_container;
 
-    private RaycastHit hit;
+    //private RaycastHit hit;
     private GameObject usage_target, held_thing;
     private Quaternion held_thing_rotation;
     private Vector2 mouse_look, smooth_v, md;
@@ -18,6 +18,7 @@ public class PlayerLooking : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        smoothing = 1;
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
         GameEvents.current.LoadCharacterRotation += LoadRotation;
@@ -28,6 +29,11 @@ public class PlayerLooking : MonoBehaviour
         held_thing = null;
         
         LoadRotation();
+
+        mouse_look.y = transform.localRotation.x;//data_container.character.rotation_y;//-transform.localRotation.x;
+        mouse_look.x = data_container.GetComponent<DataContainer>().character.rotation_y;//character.transform.localRotation.y;
+
+        Debug.Log("Character rotation: " + data_container.GetComponent<DataContainer>().character.rotation_y);
     }
 
     // Update is called once per frame
@@ -46,7 +52,7 @@ public class PlayerLooking : MonoBehaviour
 
     private void GetInput()
     {
-        if (!Input.GetButton(PlayerPrefs.GetString("Item Rotate")))//else
+        if (!Input.GetButton(PlayerPrefs.GetString("Item Rotate")))
         {
             md = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
 
@@ -58,7 +64,7 @@ public class PlayerLooking : MonoBehaviour
             mouse_look.y = Mathf.Clamp(mouse_look.y, -90f, 90f);
 
             transform.localRotation = Quaternion.AngleAxis(-mouse_look.y, Vector3.right); // up and down
-            character.transform.localRotation = Quaternion.Euler(0, why+mouse_look.x, 0); // left and right
+            character.transform.localRotation = Quaternion.Euler(0, mouse_look.x, 0); // left and right
         }
     }
     
@@ -66,8 +72,6 @@ public class PlayerLooking : MonoBehaviour
     {
         if (Input.GetButtonDown(PlayerPrefs.GetString("General Action")))
         {
-            //Debug.Log(Application.persistentDataPath);
-
             try
             {
                 usage_target = ReturnUsableObject();
@@ -93,6 +97,8 @@ public class PlayerLooking : MonoBehaviour
     private GameObject ReturnUsableObject()
     {
         GameObject thing = null;
+
+        RaycastHit hit;
 
         Physics.Raycast(transform.position, transform.forward, out hit, reach);
 

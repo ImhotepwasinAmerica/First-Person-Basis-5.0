@@ -132,6 +132,8 @@ public class LevelManager : MonoBehaviour
 
         data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
 
+        Debug.Log("Character rotation: " + guy.rotation_y);
+        
         // If a saved game has been loaded and the character has been assigned a location and rotation,
         // the character object in the current scene is destroyed and another is created
         // at he location specified in the saved data
@@ -141,10 +143,10 @@ public class LevelManager : MonoBehaviour
 
         GameObject.FindGameObjectWithTag("CameraBackup").SetActive(false);
 
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
-        camera.GetComponent<PlayerLooking>().ex = guy.rotation_x;
-        camera.GetComponent<PlayerLooking>().why = guy.rotation_y;
-        camera.GetComponent<PlayerLooking>().zee = guy.rotation_z;
+        //camera = GameObject.FindGameObjectWithTag("MainCamera");
+        //camera.GetComponent<PlayerLooking>().ex = guy.rotation_x;
+        //camera.GetComponent<PlayerLooking>().why = guy.rotation_y;
+        //camera.GetComponent<PlayerLooking>().zee = guy.rotation_z;
     }
 
     // Update is called once per frame
