@@ -28,7 +28,7 @@ public class PlayerLooking : MonoBehaviour
         usage_target = null;
         held_thing = null;
         
-        LoadRotation();
+        //LoadRotation();
 
         mouse_look.y = transform.localRotation.x;//data_container.character.rotation_y;//-transform.localRotation.x;
         mouse_look.x = data_container.GetComponent<DataContainer>().character.rotation_y;//character.transform.localRotation.y;
@@ -48,6 +48,8 @@ public class PlayerLooking : MonoBehaviour
     void FixedUpdate()
     {
         GetInput();
+
+        //GeneralAction();
     }
 
     private void GetInput()

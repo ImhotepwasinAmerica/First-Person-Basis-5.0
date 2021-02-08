@@ -16,18 +16,12 @@ using UnityEngine.Events;
  * 
  * Bugs:
  * If the 'auxiliary' save slot has not been filled with the proper data, this entire operation will not work.
- * 
- * It has proven difficult to change the location of the character;
- * If I try to change it manually, the character just teleports back to its previous location.
- * A trick is used here where, in order to set the character's spawn location when a new scene or game is loaded,
- * the character is literally deleted and re-spawned at the desired location.
- * This could cause problems when/if the character is given a unique model,
- * or if a teleportation mechanic is introduced into the game.
- * These problems might also apply to NPCs.
  */
 public class LevelManager : MonoBehaviour
 {
     public GameObject data_container, character, camera;
+    public string character_model_name;
+    public Vector3 start_location_default;
 
     private Vector3 character_position, character_rotation;
     private SavedObject guy;
@@ -35,6 +29,8 @@ public class LevelManager : MonoBehaviour
     public void Awake()
     {
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
+
+        //character_model_name = "Character 1";
 
         //// If the sub-directory corresponding to the scene exists in the save file,
         //// it is understood that the scene has been visited in the ongoing game.
@@ -131,22 +127,25 @@ public class LevelManager : MonoBehaviour
         guy = data_container.GetComponent<DataContainer>().character;
 
         data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
-
-        Debug.Log("Character rotation: " + guy.rotation_y);
         
         // If a saved game has been loaded and the character has been assigned a location and rotation,
         // the character object in the current scene is destroyed and another is created
         // at he location specified in the saved data
-        character = GameObject.Instantiate(Resources.Load<GameObject>("Character 1"),
+        if (guy.position_x == 0 && guy.position_y == 0 && guy.position_z == 0)
+        {
+            character = GameObject.Instantiate(Resources.Load<GameObject>(character_model_name),
+                        new Vector3(start_location_default.x, start_location_default.y, start_location_default.z),
+                        Quaternion.Euler(guy.rotation_x, guy.rotation_y, guy.rotation_z));
+        }
+        else
+        {
+            character = GameObject.Instantiate(Resources.Load<GameObject>(character_model_name),
                         new Vector3(guy.position_x, guy.position_y, guy.position_z),
                         Quaternion.Euler(guy.rotation_x, guy.rotation_y, guy.rotation_z));
-
+        }
+        
+        // The scene's backup camera is deleted, so that the player character's camera can work.
         GameObject.FindGameObjectWithTag("CameraBackup").SetActive(false);
-
-        //camera = GameObject.FindGameObjectWithTag("MainCamera");
-        //camera.GetComponent<PlayerLooking>().ex = guy.rotation_x;
-        //camera.GetComponent<PlayerLooking>().why = guy.rotation_y;
-        //camera.GetComponent<PlayerLooking>().zee = guy.rotation_z;
     }
 
     // Update is called once per frame

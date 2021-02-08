@@ -40,6 +40,9 @@ public class PlayerMovement : MonoBehaviour
         is_squatting = false;
 
         is_walking = false;
+
+        //height_standing = this.gameObject.GetComponent<CharacterController>().height;
+        //height_squatting = this.gameObject.GetComponent<CharacterController>().height / 2;
     }
 
     // Update is called once per frame
