@@ -6,11 +6,27 @@ public class PlayerInputDetector : CharacterActionDetector
 {
     public override void DoOnFixedUpdate()
     {
+        base.DoOnFixedUpdate();
+
+        GetInputs();
+    }
+
+    public override void DoOnUpdate()
+    {
+        base.DoOnUpdate();
+
+        //GetInputs();
+    }
+
+    private void GetInputs()
+    {
         mouse_x = Input.GetAxisRaw("Mouse X");
 
         mouse_y = Input.GetAxisRaw("Mouse Y");
 
         general_action = Input.GetButtonDown(PlayerPrefs.GetString("General Action"));
+
+        general_action_hold = Input.GetButton(PlayerPrefs.GetString("General Action"));
 
         item_rotate = Input.GetButton(PlayerPrefs.GetString("Item Rotate"));
 

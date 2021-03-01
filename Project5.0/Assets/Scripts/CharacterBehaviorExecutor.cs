@@ -65,10 +65,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         DoOnUpdate();
 
-        if (action_detector.general_action == true)
-        {
-            Debug.Log("general action");
-        }
+        //MovementLerpNotFixedUpdate();
     }
 
     void FixedUpdate()
@@ -90,9 +87,10 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         previous_grounded = current_grounded;
         current_grounded = IsGrounded();
 
-        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x, 0.15f);
-        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z, 0.15f);
-        velocity.y = velocity_endgoal.y;
+        //velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x, 0.15f);
+        //velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z, 0.15f);
+        //velocity.y = velocity_endgoal.y;
+        MovementLerp();
 
         controller.Move(velocity);
 
@@ -108,12 +106,12 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         if (action_detector.move_forward
             && !action_detector.move_backward)
         {
-            velocity_endgoal.z = time_fake;
+            velocity_endgoal.z = 1;
         }
         else if (!action_detector.move_forward
             && action_detector.move_backward)
         {
-            velocity_endgoal.z = -time_fake;
+            velocity_endgoal.z = -1;
         }
         else
         {
@@ -123,12 +121,12 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         if (action_detector.move_right
             && !action_detector.move_left)
         {
-            velocity_endgoal.x = time_fake;
+            velocity_endgoal.x = 1;
         }
         else if (!action_detector.move_right
             && action_detector.move_left)
         {
-            velocity_endgoal.x = -time_fake;
+            velocity_endgoal.x = -1;
         }
         else
         {
@@ -150,17 +148,31 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         }
     }
 
+    private void MovementLerp()
+    {
+        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * time_fake, 0.15f);
+        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * time_fake, 0.15f);
+        velocity.y = velocity_endgoal.y * time_fake;
+    }
+
+    private void MovementLerpNotFixedUpdate()
+    {
+        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 0.1f);
+        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 0.1f);
+        velocity.y = velocity_endgoal.y * Time.deltaTime;
+    }
+
     private void ApplyGravity()
     {
         if (IsGrounded())
         {
-            velocity_endgoal.y = (gravity_fake * time_fake);
+            velocity_endgoal.y = (gravity_fake);
         }
         else
         {
             if (Time.timeScale > 0.1f)
             {
-                velocity_endgoal.y += (gravity_fake * time_fake);
+                velocity_endgoal.y += (gravity_fake);
             }
         }
     }
@@ -200,7 +212,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         if (action_detector.jump_higher
             && IsGrounded())
         {
-            velocity_endgoal.y += (jump_takeoff_speed * time_fake);
+            velocity_endgoal.y += (jump_takeoff_speed);
         }
     }
 
@@ -209,11 +221,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         // Better jumping and falling
         if (velocity_endgoal.y < -0.00327654 && Time.timeScale > 0.1f)
         {
-            velocity_endgoal.y += gravity_fake * time_fake;
+            velocity_endgoal.y += gravity_fake;
         }
         else if (velocity_endgoal.y > -0.00327654 && !(action_detector.jump_higher))
         {
-            velocity_endgoal.y += (0.5f * gravity_fake * time_fake);
+            velocity_endgoal.y += (0.5f * gravity_fake);
         }
     }
 
@@ -240,7 +252,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
     private void GeneralAction()
     {
-        if (action_detector.general_action)
+        if (action_detector.general_action
+            || action_detector.general_action_hold)
         {
             try
             {

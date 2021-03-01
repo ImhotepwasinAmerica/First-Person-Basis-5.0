@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterActionDetector : MonoBehaviour
 {
-    public bool move_left, move_right, move_forward, move_backward, jump, jump_higher, squat, lean_left, lean_right, speed_toggle, item_rotate, general_action;
+    public bool move_left, move_right, move_forward, move_backward, jump, jump_higher, squat, lean_left, lean_right, speed_toggle, item_rotate, general_action , general_action_hold;
     public float mouse_x, mouse_y;
 
     public void Awake()
