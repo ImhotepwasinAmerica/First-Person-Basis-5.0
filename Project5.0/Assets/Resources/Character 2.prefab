@@ -222,7 +222,7 @@ MonoBehaviour:
   camera: {fileID: 2784748630236453106}
   held_object_anchor: {fileID: 2784748629706159870}
   data_container: {fileID: 0}
-  speed: 20
+  speed: 0.2
   jump_takeoff_speed: 4
   height_standing: 2
   height_squatting: 1

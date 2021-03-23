@@ -65,40 +65,35 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         DoOnUpdate();
 
-        //MovementLerpNotFixedUpdate();
+        ApplyGravity();
+
+        BetterMovement();
+
+        MovementLerpNotFixedUpdate();
     }
 
     void FixedUpdate()
     {
         DoOnFixedUpdate();
 
+        
+
         Walk();
 
-        ApplyGravity();
-
-        BetterMovement();
+        WalkRun();
 
         Jump();
-
-        WalkRun();
 
         velocity_endgoal = transformation.rotation * velocity_endgoal;
 
         previous_grounded = current_grounded;
         current_grounded = IsGrounded();
 
-        //velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x, 0.15f);
-        //velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z, 0.15f);
-        //velocity.y = velocity_endgoal.y;
-        MovementLerp();
-
         controller.Move(velocity);
 
         GetCameraMovement();
 
         GeneralAction();
-
-        
     }
 
     private void Walk()
@@ -148,31 +143,46 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         }
     }
 
-    private void MovementLerp()
+    private void MovementLerpNotFixedUpdate()
     {
-        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * time_fake, 0.15f);
-        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * time_fake, 0.15f);
+        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x, 10.0f * Time.deltaTime);
+        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z, 10.0f * Time.deltaTime);
         velocity.y = velocity_endgoal.y * time_fake;
     }
 
-    private void MovementLerpNotFixedUpdate()
+    private void MovementLerpX()
     {
-        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 0.1f);
-        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 0.1f);
-        velocity.y = velocity_endgoal.y * Time.deltaTime;
+        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 5.0f * Time.deltaTime);
+    }
+
+    private void MovementLerpZ()
+    {
+        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 5.0f * Time.deltaTime);
+    }
+
+    private void MovementLerpY()
+    {
+        velocity.y = Mathf.Lerp(velocity.y, velocity_endgoal.y * Time.deltaTime, 5.0f * Time.deltaTime);
+    }
+
+    private void MovementSetY()
+    {
+        velocity.y = velocity_endgoal.y;
     }
 
     private void ApplyGravity()
     {
-        if (IsGrounded())
+        if (IsGrounded()
+            && !action_detector.jump_higher
+            && !action_detector.jump)
         {
-            velocity_endgoal.y = (gravity_fake);
+            velocity_endgoal.y = 0;//(Physics.gravity.y * time_fake);
         }
         else
         {
             if (Time.timeScale > 0.1f)
             {
-                velocity_endgoal.y += (gravity_fake);
+                velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime);
             }
         }
     }
@@ -212,7 +222,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         if (action_detector.jump_higher
             && IsGrounded())
         {
-            velocity_endgoal.y += (jump_takeoff_speed);
+            velocity_endgoal.y = (jump_takeoff_speed);
+            Debug.Log(velocity_endgoal.y);
         }
     }
 
@@ -221,11 +232,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         // Better jumping and falling
         if (velocity_endgoal.y < -0.00327654 && Time.timeScale > 0.1f)
         {
-            velocity_endgoal.y += gravity_fake;
+            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime);
         }
         else if (velocity_endgoal.y > -0.00327654 && !(action_detector.jump_higher))
         {
-            velocity_endgoal.y += (0.5f * gravity_fake);
+            velocity_endgoal.y += (0.5f * (Physics.gravity.y * Time.deltaTime));
         }
     }
 
@@ -258,7 +269,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             try
             {
                 usage_target = ReturnUsableObject();
-                Debug.Log("Interacting object: " + usage_target);
+                //Debug.Log("Interacting object: " + usage_target);
                 usage_target.GetComponent<ObjectBehaviorDefault>().UseDefault(held_object_anchor);
 
                 usage_target = null;
@@ -266,7 +277,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             catch (System.NullReferenceException e)
             {
                 usage_target = null;
-                Debug.Log("No object detected");
+                //Debug.Log("No object detected");
             }
             
             usage_target = null;
@@ -293,7 +304,6 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         {
             thing = hit.collider.gameObject;
         }
-       
 
         return thing;
     }
