@@ -15,7 +15,7 @@ public class PlayerInputDetector : CharacterActionDetector
     {
         base.DoOnUpdate();
 
-        //GetInputs();
+        GetInputs();
     }
 
     private void GetInputs()

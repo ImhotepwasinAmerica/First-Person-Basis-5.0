@@ -54,10 +54,12 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 
     public override void MoveAugment()
     {
-        if (held_object_anchor != null && Input.GetButton(PlayerPrefs.GetString("Item Rotate")))
+        if (held_object_anchor != null)// && Input.GetButton(PlayerPrefs.GetString("Item Rotate")))
         {
-            transform.Rotate(Input.GetAxisRaw("Mouse X") * Vector3.right);
-            transform.Rotate(Input.GetAxisRaw("Mouse Y") * Vector3.down);
+            //transform.Rotate(Input.GetAxisRaw("Mouse X") * Vector3.right);
+            //transform.Rotate(Input.GetAxisRaw("Mouse Y") * Vector3.down);
+
+            transform.rotation = held_object_anchor.transform.rotation;
         }
 
         if (held_object_anchor != null)

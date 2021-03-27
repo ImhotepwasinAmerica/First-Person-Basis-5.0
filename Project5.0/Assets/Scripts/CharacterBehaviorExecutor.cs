@@ -6,18 +6,17 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 {
     CharacterActionDetector action_detector;
 
-    public GameObject usage_target, held_thing, camera, held_object_anchor, data_container;
-    public float speed, jump_takeoff_speed, height_standing, height_squatting, lean_distance, distance_to_ground, speed_multiplier_squatting, sensitivity, smoothing, reach;
+    public GameObject usage_target, camera, held_object_anchor, data_container;
+    public float speed, jump_takeoff_speed, sensitivity, smoothing, reach;
 
     private Vector3 velocity, velocity_endgoal;
     private Vector2 mouse_look, smooth_v, md;
     private float angular_speed, gravity_fake, time_fake, acceleration;
-    private bool is_squatting, is_walking, current_grounded, previous_grounded;
-    private Quaternion lean, held_thing_rotation;
+    private bool is_walking, current_grounded, previous_grounded, general_action_this;
+    private Quaternion held_thing_rotation;
 
     private Transform transformation;
     private CharacterController controller;
-    private CapsuleCollider collider;
     private SavedObject guy;
 
     public void Awake()
@@ -44,16 +43,12 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         time_fake = 0.01666f;
         gravity_fake = Physics.gravity.y * time_fake;
 
-        lean = Quaternion.Euler(0, 0, 0);
-
         transformation = GetComponent<Transform>();
         controller = GetComponent<CharacterController>();
 
         usage_target = null;
-        held_thing = null;
         current_grounded = true;
         previous_grounded = true;
-        is_squatting = false;
         is_walking = false;
 
         mouse_look.y = transform.localRotation.x;//data_container.character.rotation_y;//-transform.localRotation.x;
@@ -65,19 +60,23 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         DoOnUpdate();
 
+        GetSomeInputs();
+
         ApplyGravity();
 
         BetterMovement();
 
         MovementLerpNotFixedUpdate();
+
+        GeneralAction();
+
+        SpinHeldThing();
     }
 
     void FixedUpdate()
     {
         DoOnFixedUpdate();
-
         
-
         Walk();
 
         WalkRun();
@@ -92,8 +91,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         controller.Move(velocity);
 
         GetCameraMovement();
+    }
 
-        GeneralAction();
+    private void GetSomeInputs()
+    {
+        general_action_this = action_detector.general_action;
     }
 
     private void Walk()
@@ -263,12 +265,15 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
     private void GeneralAction()
     {
-        if (action_detector.general_action
-            || action_detector.general_action_hold)
+        if (action_detector.general_action)
         {
+            HeldThingReset();
+
             try
             {
                 usage_target = ReturnUsableObject();
+
+                HeldThingSet(usage_target.transform.rotation);
                 //Debug.Log("Interacting object: " + usage_target);
                 usage_target.GetComponent<ObjectBehaviorDefault>().UseDefault(held_object_anchor);
 
@@ -277,7 +282,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             catch (System.NullReferenceException e)
             {
                 usage_target = null;
-                //Debug.Log("No object detected");
+                Debug.Log("No object detected");
             }
             
             usage_target = null;
@@ -336,6 +341,25 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             camera.transform.localRotation = Quaternion.AngleAxis(-mouse_look.y, Vector3.right); // up and down
             transform.localRotation = Quaternion.Euler(0, mouse_look.x, 0); // left and right
         }
+    }
+
+    private void SpinHeldThing()
+    {
+        if (action_detector.item_rotate)
+        {
+            held_object_anchor.transform.Rotate(Input.GetAxisRaw("Mouse X") * Vector3.right);
+            held_object_anchor.transform.Rotate(Input.GetAxisRaw("Mouse Y") * Vector3.down);
+        }
+    }
+
+    private void HeldThingReset()
+    {
+        held_object_anchor.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    private void HeldThingSet(Quaternion quat)
+    {
+        held_object_anchor.transform.rotation = quat;
     }
 
     public virtual void DoOnAwake() { }
