@@ -27,6 +27,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
     private void Awake()
     {
         id = this.gameObject.transform.position.sqrMagnitude;
+        
         Debug.Log("Item ID created: " + id);
 
         try // Make sure the GameEvents script is placed earlier in the script execution order than this.
@@ -77,8 +78,12 @@ public class ObjectBehaviorDefault : MonoBehaviour
         {
             OnCollideWithPlayer(collision.gameObject);
         }
+        else
+        {
+            OnCollideWithAnything(collision.gameObject);
+        }
 
-        OnCollideWithAnything(collision.gameObject);
+        
     }
 
     void OnTriggerEnter(Collider other)
@@ -86,6 +91,10 @@ public class ObjectBehaviorDefault : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             OnCollideWithPlayer(other.gameObject);
+        }
+        else
+        {
+            OnCollideWithAnything(other.gameObject);
         }
     }
 
@@ -125,7 +134,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     public void Destroy()
     {
-        GameObject.Destroy(object_in_question);
+        GameObject.Destroy(this);
     }
 
     // The item's data (represented as 'object_data') is saved, either to the 'items' or 'presentitems' folder
@@ -197,7 +206,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
         else
         {
             Debug.Log("Item destroyed: " + this.id);
-            GameObject.Destroy(object_in_question);
+            Destroy();
         }
 
         

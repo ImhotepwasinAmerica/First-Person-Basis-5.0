@@ -24,7 +24,7 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 
         if (health < 0)
         {
-            Object.Destroy(object_in_question);
+            Destroy();
         }
     }
 
@@ -37,6 +37,8 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 
             this.GetComponent<Rigidbody>().useGravity = false;
             this.GetComponent<Rigidbody>().freezeRotation = true;
+
+            Debug.Log("The object anchor was null in the box's code.");
         }
         else
         {
@@ -45,15 +47,19 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
             this.GetComponent<Rigidbody>().useGravity = true;
             this.GetComponent<Rigidbody>().freezeRotation = false;
             held_object_anchor = null;
+
+            Debug.Log("The object anchor was not null in the box's code.");
         }
     }
 
     public override void MoveAugment()
     {
-        if (held_object_anchor != null && Input.GetButton(PlayerPrefs.GetString("Item Rotate")))
+        if (held_object_anchor != null)// && Input.GetButton(PlayerPrefs.GetString("Item Rotate")))
         {
-            transform.Rotate(Input.GetAxisRaw("Mouse X") * Vector3.right);
-            transform.Rotate(Input.GetAxisRaw("Mouse Y") * Vector3.down);
+            //transform.Rotate(Input.GetAxisRaw("Mouse X") * Vector3.right);
+            //transform.Rotate(Input.GetAxisRaw("Mouse Y") * Vector3.down);
+
+            transform.rotation = held_object_anchor.transform.rotation;
         }
 
         if (held_object_anchor != null)
