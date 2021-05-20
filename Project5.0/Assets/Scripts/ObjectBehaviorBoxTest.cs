@@ -18,6 +18,8 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 {
     public GameObject held_object_anchor;
 
+    private Vector3 force;
+
     public void DestroyOnDeath()
     {
         int health = object_data.ints[0];
@@ -54,17 +56,22 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
 
     public override void MoveAugment()
     {
-        if (held_object_anchor != null)// && Input.GetButton(PlayerPrefs.GetString("Item Rotate")))
-        {
-            //transform.Rotate(Input.GetAxisRaw("Mouse X") * Vector3.right);
-            //transform.Rotate(Input.GetAxisRaw("Mouse Y") * Vector3.down);
-
-            transform.rotation = held_object_anchor.transform.rotation;
-        }
-
         if (held_object_anchor != null)
         {
-            this.transform.position = Vector3.Lerp(this.transform.position, held_object_anchor.transform.position, 20f * Time.deltaTime);
+            //this.transform.position = Vector3.Lerp(this.transform.position, held_object_anchor.transform.position, 5f);
+            //transform.rotation = held_object_anchor.transform.rotation;
+
+            force = held_object_anchor.transform.position - this.transform.position;
+
+            this.GetComponent<Rigidbody>().velocity = force.normalized * this.GetComponent<Rigidbody>().velocity.magnitude;
+            this.GetComponent<Rigidbody>().AddForce(force * 200000f * Time.deltaTime);
+            this.GetComponent<Rigidbody>().velocity *= Mathf.Min(1.0f, force.magnitude/2);
+            //if (force.magnitude < 0.5f)
+            //{
+            //    force = force.normalized * Mathf.Sqrt(force.magnitude);
+            //}
+
+            //this.GetComponent<Rigidbody>().AddForce(force * 100000f * Time.deltaTime);
         }
 
         if (held_object_anchor != null &&

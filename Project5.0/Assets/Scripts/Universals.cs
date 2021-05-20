@@ -61,4 +61,64 @@ public class Universals : MonoBehaviour
 
         return null;
     }
+
+    public static int DnDStatGenerator()
+    {
+        return Random.Range(1, 7) + Random.Range(1, 7) + Random.Range(1, 7);
+    }
+
+    public static int GetModifier(int stat)
+    {
+        switch (stat)
+        {
+            case 3:
+                return -3;
+                break;
+            case 4:
+                return -2;
+                break;
+            case 5:
+                return -2;
+                break;
+            case 6:
+                return -1;
+                break;
+            case 7:
+                return -1;
+                break;
+            case 8:
+                return -1;
+                break;
+            case 13:
+                return 1;
+                break;
+            case 14:
+                return 1;
+                break;
+            case 15:
+                return 1;
+                break;
+            case 16:
+                return 2;
+                break;
+            case 17:
+                return 2;
+                break;
+            case 18:
+                return 3;
+                break;
+            default:
+                return 0;
+                break;
+        }
+    }
+
+    public static void BuildCharacter(GameObject body, Camera camera)
+    {
+        GameObject camera_anchor_this = Universals.FindChild(body, "CameraAnchor");
+
+        camera = Instantiate(camera, camera_anchor_this.transform.position, camera_anchor_this.transform.rotation);
+
+        camera.transform.parent = camera_anchor_this.transform;
+    }
 }

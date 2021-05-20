@@ -51,9 +51,14 @@ public class ObjectBehaviorDefault : MonoBehaviour
         GameEvents.current.SaveAllTheThings += SaveItem;
         GameEvents.current.SaveAllTheThingsAux += SaveItemAux;
 
-        
-
         is_original = true;
+
+        DoOnStart();
+    }
+
+    private void Update()
+    {
+        MoveAugment();
     }
 
     // Update is called once per frame
@@ -69,7 +74,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
             RecordPosition();
         }
 
-        MoveAugment();
+        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -262,4 +267,12 @@ public class ObjectBehaviorDefault : MonoBehaviour
     public virtual void OnCollideWithPlayer(GameObject collided) { }
 
     public virtual void OnCollideWithAnything(GameObject collided) { }
+
+    public virtual void DoOnAwake() { }
+
+    public virtual void DoOnStart() { }
+
+    public virtual void DoOnUpdate() { }
+
+    public virtual void DoOnFixedUpdate() { }
 }

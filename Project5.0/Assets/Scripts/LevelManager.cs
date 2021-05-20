@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.Events;
@@ -19,12 +21,14 @@ using UnityEngine.Events;
  */
 public class LevelManager : MonoBehaviour
 {
-    public GameObject data_container, character, camera;
+    public GameObject data_container, character;
     public string character_model_name;
     public Vector3 start_location_default;
 
+    private int counter;
     private Vector3 character_position, character_rotation;
     private SavedObject guy;
+    private Camera camera;
 
     public void Awake()
     {
@@ -102,7 +106,7 @@ public class LevelManager : MonoBehaviour
             data_container.GetComponent<DataContainer>().scene = new Scene();
             Serialization.Save<Scene>(data_container.GetComponent<DataContainer>().scene, Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name + "/scene.dat");
         }
-        
+
         if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat"))
         {
             data_container.GetComponent<DataContainer>().character =
@@ -113,13 +117,15 @@ public class LevelManager : MonoBehaviour
             data_container.GetComponent<DataContainer>().character = new SavedObject();
             Serialization.Save<SavedObject>(data_container.GetComponent<DataContainer>().character, Application.persistentDataPath + "/saves/savedgames/auxiliary/character.dat");
         }
-        
+
         data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        counter = 0;
+
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -127,7 +133,7 @@ public class LevelManager : MonoBehaviour
         guy = data_container.GetComponent<DataContainer>().character;
 
         data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
-        
+
         // If a saved game has been loaded and the character has been assigned a location and rotation,
         // the character object in the current scene is destroyed and another is created
         // at he location specified in the saved data
@@ -143,27 +149,41 @@ public class LevelManager : MonoBehaviour
                         new Vector3(guy.position_x, guy.position_y, guy.position_z),
                         Quaternion.Euler(guy.rotation_x, guy.rotation_y, guy.rotation_z));
         }
-        
+
         // The scene's backup camera is deleted, so that the player character's camera can work.
         GameObject.FindGameObjectWithTag("CameraBackup").SetActive(false);
+
+        // The camera is instantiated
+        camera = Resources.Load<Camera>("CameraPrefab");
+
+        // The player character has the camera attached to the main body's camera anchor  
+        Universals.BuildCharacter(character, camera);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (counter < 1000000)
+        {
+            counter++;
+        }
         
+        if (counter == 1)
+        {
+            EventSystemFixer();
+        }
     }
 
     void FixedUpdate()
     {
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        //camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         if (character != null)
         {
             character_position = character.transform.position;
-            character_rotation = camera.transform.eulerAngles;
+            //character_rotation = camera.transform.eulerAngles;
 
             guy.position_x = character_position.x;
             guy.position_y = character_position.y;
@@ -173,6 +193,47 @@ public class LevelManager : MonoBehaviour
             guy.rotation_y = character_rotation.y;
             guy.rotation_z = character_rotation.z;
         }
-        
+    }
+
+    private void EventSystemFixer()
+    {
+        EventSystem[] systems = GameObject.FindObjectsOfType<EventSystem>();
+
+        if(systems.Length > 1)
+        {
+            for (int i = 0; i < systems.Length; i++)
+            {
+                if (systems[i] != EventSystem.current)
+                {
+                    GameObject.Destroy(systems[i]);
+                }
+                
+            }
+        }
+        else if(systems.Length == 0)
+        {
+            GameObject eventsystem = new GameObject("EventSystem");
+            eventsystem.AddComponent<EventSystem>();
+            eventsystem.AddComponent<StandaloneInputModule>();
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

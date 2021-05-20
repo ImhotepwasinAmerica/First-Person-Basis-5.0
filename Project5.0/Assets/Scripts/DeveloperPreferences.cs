@@ -43,6 +43,10 @@ public class DeveloperPreferences : MonoBehaviour
         PlayerPrefs.SetString("Item Rotate", "G");
         PlayerPrefs.SetString("Lean Left", "Z");
         PlayerPrefs.SetString("Lean Right","X");
+        PlayerPrefs.SetString("Look Up","UpArrow");
+        PlayerPrefs.SetString("Look Down","DownArrow");
+        PlayerPrefs.SetString("Look Left","LeftArrow");
+        PlayerPrefs.SetString("Look Right","RightArrow");
     }
 
     public static void Graphics()

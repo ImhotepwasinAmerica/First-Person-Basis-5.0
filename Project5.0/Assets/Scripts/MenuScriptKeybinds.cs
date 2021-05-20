@@ -72,7 +72,7 @@ public class MenuScriptKeybinds : MonoBehaviour
         action_array = new string[] { "General Action", "Toolbelt One", "Toolbelt Two", "Toolbelt Three", "Toolbelt Four", "Toolbelt Five", "Toolbelt Six", "Toolbelt Seven",
             "Toolbelt Eight", "Toolbelt Nine","Toolbelt Ten", "Primary Attack", "Secondary Attack", "Tertiary Attack", "Kick", "Block", "Move Forward", "Move Backward", "Move Left", "Move Right",
             "Jump", "Squat", "Speed Toggle", "Toolbelt Scroll Up", "Toolbelt Scroll Down", "Drop", "Quicksave", "Quickload", "Pause", "Log", "Objectives", "Stats", "Gamma Up", "Gamma Down",
-            "Item Rotate", "Lean Left", "Lean Right"};
+            "Item Rotate", "Lean Left", "Lean Right", "Look Up","Look Down","Look Left","Look Right"};
 
         float y_position = 0;
 
