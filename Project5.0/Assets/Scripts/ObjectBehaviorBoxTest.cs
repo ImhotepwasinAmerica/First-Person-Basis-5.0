@@ -40,15 +40,19 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
             this.GetComponent<Rigidbody>().useGravity = false;
             this.GetComponent<Rigidbody>().freezeRotation = true;
 
+            this.GetComponent<Rigidbody>().transform.parent = held_object_anchor.transform;
+
             Debug.Log("The object anchor was null in the box's code.");
         }
         else
         {
-            held_object_anchor.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            //held_object_anchor.transform.localRotation = new Quaternion(0, 0, 0, 0);
             this.GetComponent<Rigidbody>().velocity = Vector3.zero;
             this.GetComponent<Rigidbody>().useGravity = true;
             this.GetComponent<Rigidbody>().freezeRotation = false;
             held_object_anchor = null;
+
+            this.transform.parent = null;
 
             Debug.Log("The object anchor was not null in the box's code.");
         }
@@ -59,19 +63,33 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
         if (held_object_anchor != null)
         {
             //this.transform.position = Vector3.Lerp(this.transform.position, held_object_anchor.transform.position, 5f);
-            //transform.rotation = held_object_anchor.transform.rotation;
+            transform.rotation = held_object_anchor.transform.rotation;
+
+            //if (Vector3.Distance(this.transform.position, held_object_anchor.transform.position) > 0.1f)
+            //{
+            //    force = held_object_anchor.transform.position - this.transform.position;
+            //    this.GetComponent<Rigidbody>().AddForce(force * 250); ;
+            //}
+            //else
+            //{
+            //    this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //}
 
             force = held_object_anchor.transform.position - this.transform.position;
 
-            this.GetComponent<Rigidbody>().velocity = force.normalized * this.GetComponent<Rigidbody>().velocity.magnitude;
-            this.GetComponent<Rigidbody>().AddForce(force * 200000f * Time.deltaTime);
-            this.GetComponent<Rigidbody>().velocity *= Mathf.Min(1.0f, force.magnitude/2);
+
+            this.GetComponent<Rigidbody>().velocity = force.normalized * Vector3.Distance(this.transform.position, held_object_anchor.transform.position) * 7.0f;
+            //this.GetComponent<Rigidbody>().AddForce(force * 200000f * Time.deltaTime);
+            //this.GetComponent<Rigidbody>().velocity *= Mathf.Min(1.0f, force.magnitude / 2);
+
             //if (force.magnitude < 0.5f)
             //{
             //    force = force.normalized * Mathf.Sqrt(force.magnitude);
             //}
 
             //this.GetComponent<Rigidbody>().AddForce(force * 100000f * Time.deltaTime);
+
+            //this.GetComponent<Rigidbody>().MovePosition(this.transform.position + force.normalized * Time.deltaTime * 40.0f);
         }
 
         if (held_object_anchor != null &&
@@ -82,6 +100,8 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
             this.GetComponent<Rigidbody>().useGravity = true;
             this.GetComponent<Rigidbody>().freezeRotation = false;
             held_object_anchor = null;
+
+            this.transform.parent = null;
         }
     }
 

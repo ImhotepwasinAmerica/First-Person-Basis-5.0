@@ -287,13 +287,13 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         if (action_detector.general_action)
         {
-            HeldThingReset();
+            //HeldThingReset();
 
             try
             {
                 usage_target = ReturnUsableObject();
 
-                HeldThingSet(usage_target.transform.rotation);
+                //HeldThingSet(usage_target.transform.rotation);
                 //Debug.Log("Interacting object: " + usage_target);
                 usage_target.GetComponent<ObjectBehaviorDefault>().UseDefault(held_object_anchor);
 
@@ -304,7 +304,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
                 usage_target = null;
                 Debug.Log("No object detected");
             }
-            
+
             usage_target = null;
         }
         else

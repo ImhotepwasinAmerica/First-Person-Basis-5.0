@@ -227,7 +227,7 @@ MonoBehaviour:
   held_object_anchor: {fileID: 833170141705543503}
   data_container: {fileID: 0}
   speed: 10
-  jump_takeoff_speed: 8
+  jump_takeoff_speed: 6
   sensitivity: 10
   smoothing: 4
   reach: 2
