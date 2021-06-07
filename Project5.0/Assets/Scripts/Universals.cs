@@ -121,4 +121,9 @@ public class Universals : MonoBehaviour
 
         camera.transform.parent = camera_anchor_this.transform;
     }
+
+    public static void SetTargetFramerate(int rate)
+    {
+        Application.targetFrameRate = rate;
+    }
 }

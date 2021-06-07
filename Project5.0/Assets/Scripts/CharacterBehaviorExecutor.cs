@@ -58,32 +58,71 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Walk();
+        if (Time.timeScale > 0.1f)
+        {
+            Walk();
 
-        DoOnUpdate();
+            DoOnUpdate();
 
-        GetSomeInputs();
+            GetSomeInputs();
+
+            //Jump();
+
+            ApplyGravity();
+
+            Jump();
+
+            BetterMovement();
+
+            velocity_endgoal = transformation.rotation * velocity_endgoal;
+
+            MovementLerpNotFixedUpdate();
+
+            GeneralAction();
+
+            SpinHeldThing();
+
+            GetCameraMovement();
+
+            //controller.Move(velocity);
+            controller.Move(velocity);
+
+            previous_grounded = current_grounded;
+            current_grounded = IsGrounded();
+
+            WalkRun();
+        }
+        //Walk();
+
+        //DoOnUpdate();
+
+        //GetSomeInputs();
+
+        ////Jump();
+
+        //ApplyGravity();
 
         //Jump();
 
-        ApplyGravity();
+        //BetterMovement();
 
-        Jump();
+        //velocity_endgoal = transformation.rotation * velocity_endgoal;
 
-        BetterMovement();
+        //MovementLerpNotFixedUpdate();
 
-        velocity_endgoal = transformation.rotation * velocity_endgoal;
+        //GeneralAction();
 
-        MovementLerpNotFixedUpdate();
+        //SpinHeldThing();
 
-        GeneralAction();
+        //GetCameraMovement();
 
-        SpinHeldThing();
-
-        GetCameraMovement();
-
+        ////controller.Move(velocity);
         //controller.Move(velocity);
-        controller.Move(velocity);
+
+        //previous_grounded = current_grounded;
+        //current_grounded = IsGrounded();
+
+        //WalkRun();
     }
 
     void FixedUpdate()
@@ -92,7 +131,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         
         //Walk();
 
-        WalkRun();
+        //WalkRun();
 
         //Jump();
 
@@ -100,8 +139,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
         //velocity_endgoal = transformation.rotation * velocity_endgoal;
 
-        previous_grounded = current_grounded;
-        current_grounded = IsGrounded();
+        //previous_grounded = current_grounded;
+        //current_grounded = IsGrounded();
 
         //controller.Move(velocity);
     }
