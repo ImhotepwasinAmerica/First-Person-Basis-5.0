@@ -8,7 +8,7 @@ public class PlayerInputDetector : CharacterActionDetector
     {
         base.DoOnFixedUpdate();
 
-        GetInputs();
+        //GetInputs();
     }
 
     public override void DoOnUpdate()

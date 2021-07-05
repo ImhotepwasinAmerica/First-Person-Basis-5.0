@@ -38,6 +38,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
 
+        md = new Vector2();
+
         smoothing = 1;
         angular_speed = Mathf.Sqrt((speed * speed / 2.0f));
         time_fake = 0.000966f;
@@ -66,8 +68,6 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             GetSomeInputs();
 
-            //Jump();
-
             ApplyGravity();
 
             Jump();
@@ -82,7 +82,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             SpinHeldThing();
 
-            GetCameraMovement();
+            //GetCameraMovement();
 
             //controller.Move(velocity);
             controller.Move(velocity);
@@ -92,6 +92,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             WalkRun();
         }
+
+        GetCameraMovement();
         //Walk();
 
         //DoOnUpdate();
@@ -388,17 +390,26 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         if (!action_detector.item_rotate)
         {
-            md = new Vector2(action_detector.mouse_x * Time.deltaTime, action_detector.mouse_y * Time.deltaTime);
+            //md = new Vector2(action_detector.mouse_x * Time.deltaTime, action_detector.mouse_y * Time.deltaTime);
 
-            md = Vector2.Scale(md, new Vector2((sensitivity * 50) * smoothing, (sensitivity * 50) * smoothing));
-            smooth_v.x = Mathf.Lerp(smooth_v.x, md.x, 1f / smoothing);
-            smooth_v.y = Mathf.Lerp(smooth_v.y, md.y, 1f / smoothing);
-            mouse_look += smooth_v;
+            //md = Vector2.Scale(md, new Vector2((sensitivity * 50) * smoothing, (sensitivity * 50) * smoothing));
+            //smooth_v.x = Mathf.Lerp(smooth_v.x, md.x, 1f / smoothing);
+            //smooth_v.y = Mathf.Lerp(smooth_v.y, md.y, 1f / smoothing);
+            //mouse_look += smooth_v;
 
-            mouse_look.y = Mathf.Clamp(mouse_look.y, -90f, 90f);
+            //mouse_look.y = Mathf.Clamp(mouse_look.y, -90f, 90f);
 
-            camera.transform.localRotation = Quaternion.AngleAxis(-mouse_look.y, Vector3.right); // up and down
-            transform.localRotation = Quaternion.Euler(0, mouse_look.x, 0); // left and right
+            //camera.transform.localRotation = Quaternion.AngleAxis(-mouse_look.y, Vector3.right); // up and down
+            //transform.localRotation = Quaternion.Euler(0, mouse_look.x, 0); // left and right
+
+
+            md.x = action_detector.mouse_x * (sensitivity * 50) * Time.deltaTime;
+            md.y -= action_detector.mouse_y * (sensitivity * 50) * Time.deltaTime;
+
+            md.y = Mathf.Clamp(md.y, -90f, 90f);
+
+            camera.transform.localRotation = Quaternion.Euler(md.y, 0,0);
+            transform.Rotate(Vector3.up * md.x);
         }
     }
 

@@ -115,9 +115,21 @@ public class ControlsMiscellaneous : MonoBehaviour
         // If a saved game has files stored in a different slot than what is being saved to, those files will be transferred over to the new slot, in their equivalent directories.
         if (data_container.GetComponent<DataContainer>().saved_game_slot != "new game")
         {
-            UnityEditor.FileUtil.CopyFileOrDirectory(
+            Serialization.CopyDirectory(
                 Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
                 Application.persistentDataPath + "/saves/savedgames/" + slot);
+            //if (Application.isEditor)
+            //{
+            //    UnityEditor.FileUtil.CopyFileOrDirectory(
+            //        Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
+            //        Application.persistentDataPath + "/saves/savedgames/" + slot);
+            //}
+            //else
+            //{
+            //    Serialization.CopyDirectory(
+            //        Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
+            //        Application.persistentDataPath + "/saves/savedgames/" + slot);
+            //}
         }
         else
         {

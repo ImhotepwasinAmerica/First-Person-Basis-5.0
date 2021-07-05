@@ -35,7 +35,7 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
         if (held_object_anchor == null)
         {
             held_object_anchor = new_anchor;
-            held_object_anchor.transform.localRotation = new Quaternion(0, 0, 0, 0);
+            //held_object_anchor.transform.localRotation = new Quaternion(0, 0, 0, 0);
 
             this.GetComponent<Rigidbody>().useGravity = false;
             this.GetComponent<Rigidbody>().freezeRotation = true;
@@ -62,7 +62,6 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
     {
         if (held_object_anchor != null)
         {
-            //this.transform.position = Vector3.Lerp(this.transform.position, held_object_anchor.transform.position, 5f);
             transform.rotation = held_object_anchor.transform.rotation;
 
             //if (Vector3.Distance(this.transform.position, held_object_anchor.transform.position) > 0.1f)

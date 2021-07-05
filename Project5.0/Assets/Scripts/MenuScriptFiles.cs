@@ -134,14 +134,19 @@ public class MenuScriptFiles : MonoBehaviour
 
     public void LoadInfo()
     {
-        if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary"))
-        {
-            UnityEditor.FileUtil.DeleteFileOrDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
-        }
+        //if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary"))
+        //{
+        //    UnityEditor.FileUtil.DeleteFileOrDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        //}
+        Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
 
-        UnityEditor.FileUtil.CopyFileOrDirectory(
-                Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
-                Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        //UnityEditor.FileUtil.CopyFileOrDirectory(
+        //        Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
+        //        Application.persistentDataPath + "/saves/savedgames/auxiliary");
+
+        Serialization.CopyDirectory(
+            Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
+            Application.persistentDataPath + "/saves/savedgames/auxiliary");
     }
 
     public void LoadMainMenu()
@@ -222,9 +227,12 @@ public class MenuScriptFiles : MonoBehaviour
             Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/" + slot);
         }
 
-        UnityEditor.FileUtil.CopyFileOrDirectory(
-                Application.persistentDataPath + "/saves/savedgames/auxiliary",
-                Application.persistentDataPath + "/saves/savedgames/" + slot);
+        //UnityEditor.FileUtil.CopyFileOrDirectory(
+        //        Application.persistentDataPath + "/saves/savedgames/auxiliary",
+        //        Application.persistentDataPath + "/saves/savedgames/" + slot);
+        Serialization.CopyDirectory(
+            Application.persistentDataPath + "/saves/savedgames/auxiliary",
+            Application.persistentDataPath + "/saves/savedgames/" + slot);
     }
 
     public void EstablishDate(Text text)

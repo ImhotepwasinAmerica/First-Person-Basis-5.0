@@ -76,6 +76,26 @@ public class Serialization : MonoBehaviour
         }
     }
 
+    // The contents of a directory are transferred to another directory
+    public static void CopyDirectory(string path_one, string path_two)
+    {
+        DeleteDirectory(path_one);
+
+        CreateDirectory(path_one);
+
+        foreach (string filename in Directory.GetFiles(path_one))
+        {
+            File.Copy(path_one + filename, path_two + filename);
+        }
+
+        foreach (string subdirectory in Directory.GetDirectories(path_one))
+        {
+            CreateDirectory(path_one + subdirectory);
+            
+            CopyDirectory(path_one + subdirectory, path_two + subdirectory);
+        }
+    }
+
     // A single file is deleted.
     public static void DeleteFile(string path)
     {
