@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 public class ControlsMiscellaneous : MonoBehaviour
 {
@@ -115,21 +116,18 @@ public class ControlsMiscellaneous : MonoBehaviour
         // If a saved game has files stored in a different slot than what is being saved to, those files will be transferred over to the new slot, in their equivalent directories.
         if (data_container.GetComponent<DataContainer>().saved_game_slot != "new game")
         {
-            Serialization.CopyDirectory(
-                Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
-                Application.persistentDataPath + "/saves/savedgames/" + slot);
-            //if (Application.isEditor)
-            //{
-            //    UnityEditor.FileUtil.CopyFileOrDirectory(
-            //        Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
-            //        Application.persistentDataPath + "/saves/savedgames/" + slot);
-            //}
-            //else
-            //{
-            //    Serialization.CopyDirectory(
-            //        Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
-            //        Application.persistentDataPath + "/saves/savedgames/" + slot);
-            //}
+            try
+            {
+                Directory.Move(
+                    Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
+                    Application.persistentDataPath + "/saves/savedgames/" + slot);
+            }
+            catch(System.Exception e)
+            {
+                Serialization.CopyDirectory(
+                    Application.persistentDataPath + "/saves/savedgames/" + data_container.GetComponent<DataContainer>().saved_game_slot,
+                    Application.persistentDataPath + "/saves/savedgames/" + slot);
+            }
         }
         else
         {

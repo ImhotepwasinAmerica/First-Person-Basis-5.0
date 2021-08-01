@@ -2,35 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CharacterBehaviorExecutor
+ * Author:          Andrew Potisk
+ * Finalized on:    --/--/----
+ * 
+ * Purpose:
+ * This script reads input from a 'CharacterActionDetector' script attached  to the same entity,
+ * and executes behavior accordingly.
+ * The behavior in question is common to all characters: NPC or PC.
+ * 
+ * Notes:
+ * 
+ * Bugs:
+ * Detection of input from 'CharacterActionDetector' scripts can be poorly synchronized with the other script itself,
+ * resulting in inconsistent player input.
+ */
 public class CharacterBehaviorExecutor : MonoBehaviour
 {
-    CharacterActionDetector action_detector;
+    protected CharacterActionDetector action_detector;
 
     public GameObject usage_target, camera, held_object_anchor, data_container;
-    public float speed, jump_takeoff_speed, sensitivity, smoothing, reach;
+    public float speed, jump_takeoff_speed, smoothing, reach, acceleration;
+    public Vector2 md;
 
-    private Vector3 velocity, velocity_endgoal;
-    private Vector2 mouse_look, smooth_v, md;
-    private float angular_speed, gravity_fake, time_fake, acceleration;
+    private Vector2 mouse_look, smooth_v;
+    private float angular_speed, gravity_fake, time_fake;
     private bool is_walking, current_grounded, previous_grounded, general_action_this;
     private Quaternion held_thing_rotation;
 
-    private Transform transformation;
-    private CharacterController controller;
-    private SavedObject guy;
+    protected Vector3 velocity, velocity_endgoal;
+    protected CharacterController controller;
+    protected SavedObject guy;
 
     public void Awake()
     {
-        DoOnAwake();
-
         action_detector = this.gameObject.GetComponent<CharacterActionDetector>();
+
+        DoOnAwake();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        DoOnStart();
-
         //data_container = GameObject.FindGameObjectWithTag("DataContainer");
         data_container = Universals.GetDataContainer();
 
@@ -40,12 +54,6 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
         md = new Vector2();
 
-        smoothing = 1;
-        angular_speed = Mathf.Sqrt((speed * speed / 2.0f));
-        time_fake = 0.000966f;
-        gravity_fake = Physics.gravity.y * time_fake;
-
-        transformation = GetComponent<Transform>();
         controller = GetComponent<CharacterController>();
 
         usage_target = null;
@@ -55,6 +63,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
         mouse_look.y = transform.localRotation.x;//data_container.character.rotation_y;//-transform.localRotation.x;
         mouse_look.x = guy.rotation_y;//character.transform.localRotation.y;
+
+        DoOnStart();
     }
 
     // Update is called once per frame
@@ -64,8 +74,6 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         {
             Walk();
 
-            DoOnUpdate();
-
             GetSomeInputs();
 
             ApplyGravity();
@@ -74,77 +82,32 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             BetterMovement();
 
-            velocity_endgoal = transformation.rotation * velocity_endgoal;
+            velocity_endgoal = transform.rotation * velocity_endgoal;
 
-            MovementLerpNotFixedUpdate();
+            WalkRun();
+
+            MovementLerpX();
+            MovementLerpZ();
+            MovementSetY();
 
             GeneralAction();
 
             SpinHeldThing();
 
-            //GetCameraMovement();
-
-            //controller.Move(velocity);
             controller.Move(velocity);
 
             previous_grounded = current_grounded;
             current_grounded = IsGrounded();
-
-            WalkRun();
         }
 
         GetCameraMovement();
-        //Walk();
-
-        //DoOnUpdate();
-
-        //GetSomeInputs();
-
-        ////Jump();
-
-        //ApplyGravity();
-
-        //Jump();
-
-        //BetterMovement();
-
-        //velocity_endgoal = transformation.rotation * velocity_endgoal;
-
-        //MovementLerpNotFixedUpdate();
-
-        //GeneralAction();
-
-        //SpinHeldThing();
-
-        //GetCameraMovement();
-
-        ////controller.Move(velocity);
-        //controller.Move(velocity);
-
-        //previous_grounded = current_grounded;
-        //current_grounded = IsGrounded();
-
-        //WalkRun();
+        
+        DoOnUpdate();
     }
 
     void FixedUpdate()
     {
         DoOnFixedUpdate();
-        
-        //Walk();
-
-        //WalkRun();
-
-        //Jump();
-
-        //ApplyGravity();
-
-        //velocity_endgoal = transformation.rotation * velocity_endgoal;
-
-        //previous_grounded = current_grounded;
-        //current_grounded = IsGrounded();
-
-        //controller.Move(velocity);
     }
 
     private void ApplyTime()
@@ -196,8 +159,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             || (action_detector.move_backward && action_detector.move_left)
             || (action_detector.move_backward && action_detector.move_right))
         {
-            velocity_endgoal.z *= angular_speed;
-            velocity_endgoal.x *= angular_speed;
+            velocity_endgoal.z *= Universals.GetAngularSpeed(speed);
+            velocity_endgoal.x *= Universals.GetAngularSpeed(speed);
         }
         else
         {
@@ -208,24 +171,27 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
     private void MovementLerpNotFixedUpdate()
     {
-        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 10.0f * Time.deltaTime);
-        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 10.0f * Time.deltaTime);
+        //velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 10*Time.deltaTime);
+        //velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 10*Time.deltaTime);
+
+        velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x * Time.deltaTime, acceleration * Time.deltaTime);
+        velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z * Time.deltaTime, acceleration * Time.deltaTime);
         velocity.y = velocity_endgoal.y;
     }
 
     private void MovementLerpX()
     {
-        velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 5.0f * Time.deltaTime);
+        velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x * Time.deltaTime, acceleration * Time.deltaTime);
     }
 
     private void MovementLerpZ()
     {
-        velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 5.0f * Time.deltaTime);
+        velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z * Time.deltaTime, acceleration * Time.deltaTime);
     }
 
     private void MovementLerpY()
     {
-        velocity.y = Mathf.Lerp(velocity.y, velocity_endgoal.y * Time.deltaTime, 5.0f * Time.deltaTime);
+        velocity.y = Universals.LerpBetter(velocity.y, velocity_endgoal.y * Time.deltaTime, acceleration * Time.deltaTime);
     }
 
     private void MovementSetY()
@@ -236,17 +202,12 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     private void ApplyGravity()
     {
         if (IsGrounded())
-            //&& (!action_detector.jump || !action_detector.jump_higher))
         {
             velocity_endgoal.y = (Physics.gravity.y * Time.deltaTime * Time.deltaTime);
         }
         else
         {
-            if (Time.timeScale > 0.1f)
-            {
-                velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime);
-                //Debug.Log(velocity_endgoal.y);
-            }
+            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime);
         }
     }
 
@@ -286,7 +247,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             && IsGrounded())
         {
             //Debug.Log(Time.deltaTime);
-            velocity_endgoal.y = jump_takeoff_speed * time_fake;
+            velocity_endgoal.y = jump_takeoff_speed * Universals.GetTimeFake();
         }
     }
 
@@ -386,25 +347,12 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         }
     }
 
-    private void GetCameraMovement()
+    public virtual void GetCameraMovement()
     {
         if (!action_detector.item_rotate)
         {
-            //md = new Vector2(action_detector.mouse_x * Time.deltaTime, action_detector.mouse_y * Time.deltaTime);
-
-            //md = Vector2.Scale(md, new Vector2((sensitivity * 50) * smoothing, (sensitivity * 50) * smoothing));
-            //smooth_v.x = Mathf.Lerp(smooth_v.x, md.x, 1f / smoothing);
-            //smooth_v.y = Mathf.Lerp(smooth_v.y, md.y, 1f / smoothing);
-            //mouse_look += smooth_v;
-
-            //mouse_look.y = Mathf.Clamp(mouse_look.y, -90f, 90f);
-
-            //camera.transform.localRotation = Quaternion.AngleAxis(-mouse_look.y, Vector3.right); // up and down
-            //transform.localRotation = Quaternion.Euler(0, mouse_look.x, 0); // left and right
-
-
-            md.x = action_detector.mouse_x * (sensitivity * 50) * Time.deltaTime;
-            md.y -= action_detector.mouse_y * (sensitivity * 50) * Time.deltaTime;
+            md.x = action_detector.mouse_x * (Universals.GetNPCSensitivity() * 50) * Time.deltaTime;
+            md.y -= action_detector.mouse_y * (Universals.GetNPCSensitivity() * 50) * Time.deltaTime;
 
             md.y = Mathf.Clamp(md.y, -90f, 90f);
 

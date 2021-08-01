@@ -74,8 +74,8 @@ GameObject:
   - component: {fileID: 6637155327375998332}
   - component: {fileID: 6637155327375998333}
   - component: {fileID: 6637155327375998329}
+  - component: {fileID: 2177593862032060331}
   - component: {fileID: 6637155327375998334}
-  - component: {fileID: 6637155327375998335}
   m_Layer: 0
   m_Name: Character 3
   m_TagString: Untagged
@@ -179,6 +179,36 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2177593862032060331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6637155327375998320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07a5512fea19f949a7145c3e58dd346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usage_target: {fileID: 0}
+  camera: {fileID: 6637155327466089504}
+  held_object_anchor: {fileID: 833170141705543503}
+  data_container: {fileID: 0}
+  speed: 12
+  jump_takeoff_speed: 6
+  smoothing: 4
+  reach: 2
+  acceleration: 0.08
+  md: {x: 0, y: 0}
+  rotation_thing: {fileID: 6637155326943715232}
+  speed_multiplier_squatting: 0.5
+  height_standing: 2
+  height_squatting: 1
+  sensitivity: 10
+  cont_lean_distance: 0.15
+  move_lean_distance: 0.03
+  lean_speed_scalar: 0.4
 --- !u!114 &6637155327375998334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,6 +228,7 @@ MonoBehaviour:
   jump: 0
   jump_higher: 0
   squat: 0
+  squat_hold: 0
   lean_left: 0
   lean_right: 0
   speed_toggle: 0
@@ -210,27 +241,6 @@ MonoBehaviour:
   Look_right: 0
   mouse_x: 0
   mouse_y: 0
---- !u!114 &6637155327375998335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6637155327375998320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f650a64a471b03c408182b406dc950fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usage_target: {fileID: 0}
-  camera: {fileID: 6637155327466089504}
-  held_object_anchor: {fileID: 833170141705543503}
-  data_container: {fileID: 0}
-  speed: 10
-  jump_takeoff_speed: 6
-  sensitivity: 10
-  smoothing: 4
-  reach: 2
 --- !u!1 &6637155327466089504
 GameObject:
   m_ObjectHideFlags: 0

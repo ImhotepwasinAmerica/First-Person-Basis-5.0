@@ -7,8 +7,6 @@ public class PlayerInputDetector : CharacterActionDetector
     public override void DoOnFixedUpdate()
     {
         base.DoOnFixedUpdate();
-
-        //GetInputs();
     }
 
     public override void DoOnUpdate()
@@ -33,6 +31,8 @@ public class PlayerInputDetector : CharacterActionDetector
         speed_toggle = Input.GetButtonDown(PlayerPrefs.GetString("Speed Toggle"));
 
         squat = Input.GetButtonDown(PlayerPrefs.GetString("Squat"));
+
+        squat_hold = Input.GetButton(PlayerPrefs.GetString("Squat"));
 
         lean_left = Input.GetButton(PlayerPrefs.GetString("Lean Left"));
 

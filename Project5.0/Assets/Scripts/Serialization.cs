@@ -5,6 +5,20 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
+/*
+ * Serialization
+ * Author:          Andrew Potisk
+ * Finalized on:    --/--/----
+ * 
+ * Purpose:
+ * These scripts handle all operations regarding file serialization, for saving and loading
+ * 
+ * Notes:
+ * 
+ * Bugs:
+ * Due to the use of the 'CopyDirectory()' function,
+ * saving and loading may be bugged on some systems.
+ */
 public class Serialization : MonoBehaviour
 {
     public static void Save<T>(T thing, string path)
@@ -79,20 +93,22 @@ public class Serialization : MonoBehaviour
     // The contents of a directory are transferred to another directory
     public static void CopyDirectory(string path_one, string path_two)
     {
-        DeleteDirectory(path_one);
+        DeleteDirectory(path_two);
 
-        CreateDirectory(path_one);
+        CreateDirectory(path_two);
 
-        foreach (string filename in Directory.GetFiles(path_one))
+        DirectoryInfo di = new DirectoryInfo(path_one);
+
+        foreach (var filename in di.GetFiles())
         {
-            File.Copy(path_one + filename, path_two + filename);
+            File.Copy(path_one + filename.Name, path_two + filename.Name);
         }
 
-        foreach (string subdirectory in Directory.GetDirectories(path_one))
+        foreach (var subdirectory in di.GetDirectories())
         {
-            CreateDirectory(path_one + subdirectory);
+            CreateDirectory(path_one + subdirectory.Name);
             
-            CopyDirectory(path_one + subdirectory, path_two + subdirectory);
+            CopyDirectory(path_one + subdirectory.Name, path_two + subdirectory.Name);
         }
     }
 

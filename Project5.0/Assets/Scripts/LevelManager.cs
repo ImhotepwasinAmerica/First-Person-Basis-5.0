@@ -34,31 +34,6 @@ public class LevelManager : MonoBehaviour
     {
         data_container = GameObject.FindGameObjectWithTag("DataContainer");
 
-        //character_model_name = "Character 1";
-
-        //// If the sub-directory corresponding to the scene exists in the save file,
-        //// it is understood that the scene has been visited in the ongoing game.
-        //// It is therefore necessary to affect the scene according to the changes made to it.
-        //// If the sub-directory exists but the 'presentitems' sub-directory within that is empty,
-        //// it is presumed that the directory was created without entering and thereby saving the scene.
-        //if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/"
-        //    + SceneManager.GetActiveScene().name)
-        //    &&
-        //    Directory.GetFiles(Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
-        //    + SceneManager.GetActiveScene().name + "/presentitems").Length 
-        //    != 0)
-        //{
-        //    Debug.Log("Items affected appropriately, so far.");
-
-        //    // This *CANNOT* run when the 'presentitems' directory is empty, otherwise all items in the scene will disappear!
-        //    //GameEvents.current.DeleteSmartly();
-        //    GameEvents.current.DeleteSmartly();
-        //}
-        //else
-        //{
-        //    Debug.Log("No items affected.");
-        //}
-
         // If the directory which holds the current scene's data does not exist,
         // it is created.
         if (!Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name))
@@ -82,8 +57,8 @@ public class LevelManager : MonoBehaviour
             + "/presentitems");
         }
 
-        Debug.Log("Items affected: " + Directory.GetFiles(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
-            + "/presentitems").Length);
+        //Debug.Log("Items affected: " + Directory.GetFiles(Application.persistentDataPath + "/saves/savedgames/auxiliary/" + SceneManager.GetActiveScene().name
+        //    + "/presentitems").Length);
 
         if (Serialization.SaveExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/game.dat"))
         {
@@ -134,9 +109,6 @@ public class LevelManager : MonoBehaviour
 
         data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
 
-        // If a saved game has been loaded and the character has been assigned a location and rotation,
-        // the character object in the current scene is destroyed and another is created
-        // at he location specified in the saved data
         if (guy.position_x == 0 && guy.position_y == 0 && guy.position_z == 0)
         {
             character = GameObject.Instantiate(Resources.Load<GameObject>(character_model_name),
@@ -185,13 +157,13 @@ public class LevelManager : MonoBehaviour
             character_position = character.transform.position;
             //character_rotation = camera.transform.eulerAngles;
 
-            guy.position_x = character_position.x;
-            guy.position_y = character_position.y;
-            guy.position_z = character_position.z;
+            //guy.position_x = character_position.x;
+            //guy.position_y = character_position.y;
+            //guy.position_z = character_position.z;
 
-            guy.rotation_x = character_rotation.x;
-            guy.rotation_y = character_rotation.y;
-            guy.rotation_z = character_rotation.z;
+            //guy.rotation_x = character_rotation.x;
+            //guy.rotation_y = character_rotation.y;
+            //guy.rotation_z = character_rotation.z;
         }
     }
 

@@ -62,9 +62,16 @@ public class Universals : MonoBehaviour
         return null;
     }
 
-    public static int DnDStatGenerator()
+    public static int DiceRoll(int number_of_dice, int dice_level)
     {
-        return Random.Range(1, 7) + Random.Range(1, 7) + Random.Range(1, 7);
+        int result = 0;
+
+        for (int i = 0; i < number_of_dice; i++)
+        {
+            result += Random.Range(1, dice_level + 1);
+        }
+
+        return result;
     }
 
     public static int GetModifier(int stat)
@@ -122,8 +129,63 @@ public class Universals : MonoBehaviour
         camera.transform.parent = camera_anchor_this.transform;
     }
 
+    public static float LerpBetter(float starting_point, float end_point, float rate)
+    {
+        if (starting_point < end_point)
+        {
+            if((end_point - starting_point) < rate)
+            {
+                return starting_point + (end_point - starting_point);
+            }
+            else
+            {
+                return starting_point + rate;
+            }
+        }
+        else if (starting_point > end_point)
+        {
+            if ((starting_point - end_point) < rate)
+            {
+                return starting_point - (starting_point - end_point);
+            }
+            else
+            {
+                return starting_point - rate;
+            }
+        }
+        else
+        {
+            return end_point;
+        }
+    }
+
     public static void SetTargetFramerate(int rate)
     {
         Application.targetFrameRate = rate;
+    }
+
+    public static float GetNPCSensitivity()
+    {
+        return 10;
+    }
+
+    public static float GetSmoothing()
+    {
+        return 4;
+    }
+
+    public static float GetAngularSpeed(float speed)
+    {
+        return Mathf.Sqrt((speed * speed / 2.0f));
+    }
+
+    public static float GetTimeFake()
+    {
+        return 0.000966f;
+    }
+
+    public static float GetGravityFake()
+    {
+        return Physics.gravity.y * Universals.GetTimeFake();
     }
 }
