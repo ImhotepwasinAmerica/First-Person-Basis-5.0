@@ -209,7 +209,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         }
         else
         {
-            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime);
+            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime * 2);
         }
     }
 
@@ -258,9 +258,9 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         // Better jumping and falling
         if (velocity_endgoal.y < -0.00327654 && Time.timeScale > 0.1f)
         {
-            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime);
+            //velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime); // Increased gravity
         }
-        else if (velocity_endgoal.y > -0.00327654 && !(action_detector.jump_higher))
+        else if (velocity_endgoal.y > -0.00327654 && !(action_detector.jump_higher)) // Reactive jumping
         {
             velocity_endgoal.y += (0.5f * (Physics.gravity.y * Time.deltaTime * Time.deltaTime));
         }
