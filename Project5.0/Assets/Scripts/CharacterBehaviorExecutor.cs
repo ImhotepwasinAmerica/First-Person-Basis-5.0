@@ -82,7 +82,9 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             BetterMovement();
 
-            velocity_endgoal = transform.rotation * velocity_endgoal;
+            // I'm not sure yet how to make a character move along with whatever its standing on.
+            // This could cause problems.
+            velocity_endgoal = transform.localRotation * velocity_endgoal;
 
             WalkRun();
 

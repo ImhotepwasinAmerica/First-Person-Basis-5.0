@@ -35,6 +35,7 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
         if (held_object_anchor == null)
         {
             held_object_anchor = new_anchor;
+            held_object_anchor.transform.rotation = transform.rotation;
 
             this.GetComponent<Rigidbody>().useGravity = false;
             this.GetComponent<Rigidbody>().freezeRotation = true;
@@ -63,31 +64,9 @@ public class ObjectBehaviorBoxTest : ObjectBehaviorDefault
         {
             transform.rotation = held_object_anchor.transform.rotation;
 
-            //if (Vector3.Distance(this.transform.position, held_object_anchor.transform.position) > 0.1f)
-            //{
-            //    force = held_object_anchor.transform.position - this.transform.position;
-            //    this.GetComponent<Rigidbody>().AddForce(force * 250); ;
-            //}
-            //else
-            //{
-            //    this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //}
-
             force = held_object_anchor.transform.position - this.transform.position;
 
-
             this.GetComponent<Rigidbody>().velocity = force.normalized * Vector3.Distance(this.transform.position, held_object_anchor.transform.position) * 7.0f;
-            //this.GetComponent<Rigidbody>().AddForce(force * 200000f * Time.deltaTime);
-            //this.GetComponent<Rigidbody>().velocity *= Mathf.Min(1.0f, force.magnitude / 2);
-
-            //if (force.magnitude < 0.5f)
-            //{
-            //    force = force.normalized * Mathf.Sqrt(force.magnitude);
-            //}
-
-            //this.GetComponent<Rigidbody>().AddForce(force * 100000f * Time.deltaTime);
-
-            //this.GetComponent<Rigidbody>().MovePosition(this.transform.position + force.normalized * Time.deltaTime * 40.0f);
         }
 
         if (held_object_anchor != null &&

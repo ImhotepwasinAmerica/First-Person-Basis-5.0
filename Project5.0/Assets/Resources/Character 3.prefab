@@ -208,7 +208,7 @@ MonoBehaviour:
   sensitivity: 10
   cont_lean_distance: 0.15
   move_lean_distance: 0.03
-  lean_speed_scalar: 0.4
+  lean_speed_scalar: 0.2
 --- !u!114 &6637155327375998334
 MonoBehaviour:
   m_ObjectHideFlags: 0
