@@ -101,14 +101,14 @@ public class Serialization : MonoBehaviour
 
         foreach (var filename in di.GetFiles())
         {
-            File.Copy(path_one + filename.Name, path_two + filename.Name);
+            File.Copy(path_one + "/" + filename.Name, path_two + "/" + filename.Name);
         }
 
         foreach (var subdirectory in di.GetDirectories())
         {
             CreateDirectory(path_one + subdirectory.Name);
             
-            CopyDirectory(path_one + subdirectory.Name, path_two + subdirectory.Name);
+            CopyDirectory(path_one + "/" + subdirectory.Name, path_two + "/" + subdirectory.Name);
         }
     }
 

@@ -229,9 +229,9 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
         guy.position_y = transform.position.y;
         guy.position_z = transform.position.z;
 
-        guy.rotation_x = transform.rotation.x;
-        guy.rotation_y = transform.rotation.y;
-        guy.rotation_z = transform.rotation.z;
+        guy.rotation_x = this.gameObject.transform.rotation.eulerAngles.x;
+        guy.rotation_y = this.gameObject.transform.rotation.eulerAngles.y;
+        guy.rotation_z = this.gameObject.transform.rotation.eulerAngles.z;
     }
 
     private void LeanCorrection()
@@ -249,6 +249,7 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
 
     public void SaveSelf()
     {
+        Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
         Serialization.Save<SavedObject>(guy,
             Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot")
@@ -257,6 +258,7 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
 
     public void SaveSelfAux()
     {
+        Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
         Serialization.Save<SavedObject>(guy,
             Application.persistentDataPath + "/saves/savedgames/auxiliary/"
             + "/character.dat");

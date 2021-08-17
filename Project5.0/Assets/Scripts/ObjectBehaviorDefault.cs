@@ -115,9 +115,9 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     public void RecordRotation()
     {
-        object_data.rotation_x = this.gameObject.transform.rotation.x;
-        object_data.rotation_y = this.gameObject.transform.rotation.y;
-        object_data.rotation_z = this.gameObject.transform.rotation.z;
+        object_data.rotation_x = this.gameObject.transform.rotation.eulerAngles.x;
+        object_data.rotation_y = this.gameObject.transform.rotation.eulerAngles.y;
+        object_data.rotation_z = this.gameObject.transform.rotation.eulerAngles.z;
     }
 
     public void RecordPosition()

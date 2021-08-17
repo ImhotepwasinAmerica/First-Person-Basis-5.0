@@ -142,18 +142,24 @@ public class MenuScriptFiles : MonoBehaviour
             Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/auxiliary");
         }
 
-        try
-        {
-            Directory.Move(
+        //try
+        //{
+        //    Debug.Log("Directory.Move was used");
+        //    Directory.Move(
+        //        Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
+        //        Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        //}
+        //catch(System.Exception e)
+        //{
+        //    Debug.Log("Serialization.CopyDirectory was used");
+        //    Serialization.CopyDirectory(
+        //        Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
+        //        Application.persistentDataPath + "/saves/savedgames/auxiliary");
+        //}
+
+        Serialization.CopyDirectory(
                 Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
                 Application.persistentDataPath + "/saves/savedgames/auxiliary");
-        }
-        catch(System.Exception e)
-        {
-            Serialization.CopyDirectory(
-                Application.persistentDataPath + "/saves/savedgames/" + PlayerPrefs.GetString("saved_game_slot"),
-                Application.persistentDataPath + "/saves/savedgames/auxiliary");
-        }
     }
 
     public void LoadMainMenu()
@@ -234,18 +240,24 @@ public class MenuScriptFiles : MonoBehaviour
             Serialization.DeleteDirectory(Application.persistentDataPath + "/saves/savedgames/" + slot);
         }
 
-        try
-        {
-            Directory.Move(
+        //try
+        //{
+        //    Debug.Log("Directory.Move was used");
+        //    Directory.Move(
+        //        Application.persistentDataPath + "/saves/savedgames/auxiliary",
+        //        Application.persistentDataPath + "/saves/savedgames/" + slot);
+        //}
+        //catch(System.Exception e)
+        //{
+        //    Debug.Log("Serialization.CopyDirectory was used");
+        //    Serialization.CopyDirectory(
+        //        Application.persistentDataPath + "/saves/savedgames/auxiliary",
+        //        Application.persistentDataPath + "/saves/savedgames/" + slot);
+        //}
+
+        Serialization.CopyDirectory(
                 Application.persistentDataPath + "/saves/savedgames/auxiliary",
                 Application.persistentDataPath + "/saves/savedgames/" + slot);
-        }
-        catch(System.Exception e)
-        {
-            Serialization.CopyDirectory(
-                Application.persistentDataPath + "/saves/savedgames/auxiliary",
-                Application.persistentDataPath + "/saves/savedgames/" + slot);
-        }
     }
 
     public void EstablishDate(Text text)
