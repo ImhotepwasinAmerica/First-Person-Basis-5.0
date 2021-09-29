@@ -199,8 +199,8 @@ MonoBehaviour:
   jump_takeoff_speed: 6
   smoothing: 4
   reach: 2
-  acceleration: 200
-  deceleration: 100
+  acceleration: 300
+  deceleration: 150
   md: {x: 0, y: 0}
   rotation_thing: {fileID: 6637155326943715232}
   speed_multiplier_squatting: 0.5
