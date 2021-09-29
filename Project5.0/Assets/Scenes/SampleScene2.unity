@@ -143,6 +143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5912729761657274219, guid: 99f31689fd4c8db448809dbb67781fd5,
         type: 3}
+      propertyPath: is_original
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912729761657274219, guid: 99f31689fd4c8db448809dbb67781fd5,
+        type: 3}
       propertyPath: spawn_location.x
       value: 1
       objectReference: {fileID: 0}

@@ -188,4 +188,14 @@ public class Universals : MonoBehaviour
     {
         return Physics.gravity.y * Universals.GetTimeFake();
     }
+
+    public static float GetCharacterMaxSpeed()
+    {
+        return 100f;
+    }
+
+    public static float Pythagoras(float a, float b)
+    {
+        return Mathf.Sqrt((a * a) + (b * b));
+    }
 }

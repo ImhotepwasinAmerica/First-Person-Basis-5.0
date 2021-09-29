@@ -16,6 +16,7 @@ using UnityEngine.UI;
  * Notes:
  * 
  * Bugs:
+ * The script disappears from the object when a scene which has been loaded  before has been loaded again.
  */
 public class ObjectBehaviorSceneTransfer : ObjectBehaviorDefault
 {
@@ -23,16 +24,16 @@ public class ObjectBehaviorSceneTransfer : ObjectBehaviorDefault
     public Vector3 spawn_location;
     private GameObject slider;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //}
 
-    // Update is called once per frame
-    void Update()
-    {
+    //// Update is called once per frame
+    //void Update()
+    //{
         
-    }
+    //}
 
     IEnumerator LoadAsynchronously(string scene_name)
     {

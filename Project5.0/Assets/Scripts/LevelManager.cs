@@ -109,7 +109,7 @@ public class LevelManager : MonoBehaviour
 
         data_container.GetComponent<DataContainer>().game.current_scene_name = SceneManager.GetActiveScene().name;
 
-        Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
+        //Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
         if (guy.position_x == 0 && guy.position_y == 0 && guy.position_z == 0)
         {
             character = GameObject.Instantiate(Resources.Load<GameObject>(character_model_name),

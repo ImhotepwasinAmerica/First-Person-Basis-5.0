@@ -139,7 +139,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     public void Destroy()
     {
-        GameObject.Destroy(this);
+        GameObject.Destroy(this.gameObject);
     }
 
     // The item's data (represented as 'object_data') is saved, either to the 'items' or 'presentitems' folder
@@ -185,8 +185,6 @@ public class ObjectBehaviorDefault : MonoBehaviour
 
     public void DestroyOrChange()
     {
-        Debug.Log("Item affected: " + this.id);
-
         if (Serialization.SaveExists(
             Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
             + SceneManager.GetActiveScene().name
@@ -213,8 +211,6 @@ public class ObjectBehaviorDefault : MonoBehaviour
             Debug.Log("Item destroyed: " + this.id);
             Destroy();
         }
-
-        
     }
 
     public virtual void UseDefault(GameObject thing) { }

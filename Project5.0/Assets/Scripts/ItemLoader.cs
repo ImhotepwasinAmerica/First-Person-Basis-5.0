@@ -19,14 +19,12 @@ public class ItemLoader : MonoBehaviour
 
         has_been_created = false;
 
-        if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/"
-            + data_container.GetComponent<DataContainer>().game.saveslot_label
-            + "/" + SceneManager.GetActiveScene().name))
+        if (Serialization.DirectoryExists(Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+            + SceneManager.GetActiveScene().name))
         {
-            files = Directory.GetFiles(Application.persistentDataPath + "/saves/savedgames/"
-            + data_container.GetComponent<DataContainer>().game.saveslot_label
-            + "/" + SceneManager.GetActiveScene().name
-            + "/items");
+            files = Directory.GetFiles(Application.persistentDataPath + "/saves/savedgames/auxiliary/" 
+                + SceneManager.GetActiveScene().name
+                + "/items");
 
             if (files.Length > 0)
             {

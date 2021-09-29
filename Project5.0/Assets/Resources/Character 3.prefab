@@ -196,10 +196,11 @@ MonoBehaviour:
   held_object_anchor: {fileID: 833170141705543503}
   data_container: {fileID: 0}
   speed: 12
-  jump_takeoff_speed: 8
+  jump_takeoff_speed: 6
   smoothing: 4
   reach: 2
-  acceleration: 0.08
+  acceleration: 200
+  deceleration: 100
   md: {x: 0, y: 0}
   rotation_thing: {fileID: 6637155326943715232}
   speed_multiplier_squatting: 0.5

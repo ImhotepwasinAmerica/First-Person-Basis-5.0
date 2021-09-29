@@ -23,11 +23,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     protected CharacterActionDetector action_detector;
 
     public GameObject usage_target, camera, held_object_anchor, data_container;
-    public float speed, jump_takeoff_speed, smoothing, reach, acceleration;
+    public float speed, jump_takeoff_speed, smoothing, reach, acceleration, deceleration;
     public Vector2 md;
 
     private Vector2 mouse_look, smooth_v;
-    private float angular_speed, gravity_fake, time_fake;
+    private float acceleration_true, accelerator_x, accelerator_y, accelerator_z;
     private bool is_walking, current_grounded, previous_grounded, general_action_this;
     private Quaternion held_thing_rotation;
 
@@ -52,6 +52,10 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
 
+        accelerator_x = 0;
+        accelerator_y = 0;
+        accelerator_z = 0;
+
         md = new Vector2();
 
         controller = GetComponent<CharacterController>();
@@ -74,41 +78,50 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         {
             Walk();
 
-            GetSomeInputs();
+            WalkRun();
+
+            // I'm not sure yet how to make a character move along with whatever its standing on.
+            // This could cause problems.
+            velocity_endgoal = CorrectForRotation(velocity_endgoal);
 
             ApplyGravity();
 
             Jump();
 
-            BetterMovement();
 
-            // I'm not sure yet how to make a character move along with whatever its standing on.
-            // This could cause problems.
-            velocity_endgoal = transform.localRotation * velocity_endgoal;
+            //AccelerationSet();
+            //MovementLerpUnifiedXZ();
 
-            WalkRun();
+            //MovementLerpRealXZ();
+            //AcceleratorScale();
 
-            MovementLerpX();
-            MovementLerpZ();
             MovementSetY();
+
+            BetterMovement();
 
             GeneralAction();
 
             SpinHeldThing();
 
-            controller.Move(velocity);
+            //ApplyTime();
+
+            controller.Move(velocity * Time.deltaTime);
 
             previous_grounded = current_grounded;
             current_grounded = IsGrounded();
         }
 
         GetCameraMovement();
-        
+
         DoOnUpdate();
     }
 
     void FixedUpdate()
     {
+        AccelerationSet();
+        MovementLerpUnifiedXZ();
+        //velocity = velocity_endgoal;
+
         DoOnFixedUpdate();
     }
 
@@ -117,6 +130,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         velocity.x *= Time.deltaTime;
         velocity.y *= Time.deltaTime;
         velocity.z *= Time.deltaTime;
+    }
+
+    private Vector3 CorrectForRotation(Vector3 direction_original)
+    {
+        return transform.localRotation * direction_original;
     }
 
     private void GetSomeInputs()
@@ -169,31 +187,84 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             velocity_endgoal.z *= speed;
             velocity_endgoal.x *= speed;
         }
-    }
 
-    private void MovementLerpNotFixedUpdate()
-    {
-        //velocity.x = Mathf.Lerp(velocity.x, velocity_endgoal.x * Time.deltaTime, 10*Time.deltaTime);
-        //velocity.z = Mathf.Lerp(velocity.z, velocity_endgoal.z * Time.deltaTime, 10*Time.deltaTime);
-
-        velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x * Time.deltaTime, acceleration * Time.deltaTime);
-        velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z * Time.deltaTime, acceleration * Time.deltaTime);
-        velocity.y = velocity_endgoal.y;
+        //velocity_endgoal.z *= Time.deltaTime;
+        //velocity_endgoal.x *= Time.deltaTime;
     }
 
     private void MovementLerpX()
     {
-        velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x * Time.deltaTime, acceleration * Time.deltaTime);
+        velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x, acceleration * Time.deltaTime);
     }
 
     private void MovementLerpZ()
     {
-        velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z * Time.deltaTime, acceleration * Time.deltaTime);
+        velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z, acceleration * Time.deltaTime);
+    }
+
+    private void MovementLerpUnifiedXZ()
+    {
+        //Debug.Log(velocity_endgoal);
+        
+        float ratio;
+        
+        if(Mathf.Abs(velocity_endgoal.x-velocity.x)
+            > Mathf.Abs(velocity_endgoal.z-velocity.z))
+        {
+            ratio = Mathf.Abs(velocity_endgoal.z - velocity.z) / Mathf.Abs(velocity_endgoal.x - velocity.x);
+            velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x, acceleration_true * Universals.GetTimeFake());
+            velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z, acceleration_true * ratio * Universals.GetTimeFake());
+        }
+        else
+        {
+            ratio = Mathf.Abs(velocity_endgoal.x - velocity.x) / Mathf.Abs(velocity_endgoal.z - velocity.z);
+            velocity.z = Universals.LerpBetter(velocity.z, velocity_endgoal.z, acceleration_true * Universals.GetTimeFake());
+            velocity.x = Universals.LerpBetter(velocity.x, velocity_endgoal.x, acceleration_true * ratio * Universals.GetTimeFake());
+        }
     }
 
     private void MovementLerpY()
     {
-        velocity.y = Universals.LerpBetter(velocity.y, velocity_endgoal.y * Time.deltaTime, acceleration * Time.deltaTime);
+        velocity.y = Universals.LerpBetter(velocity.y, velocity_endgoal.y, acceleration * Time.deltaTime);
+    }
+
+    private void MovementLerpRealXZ()
+    {
+        velocity.x = Mathf.Lerp(0, velocity_endgoal.x, accelerator_x);
+        velocity.z = Mathf.Lerp(0, velocity_endgoal.z, accelerator_z);
+    }
+
+    private void AcceleratorScale()
+    {
+        if ((Mathf.Abs(velocity.x) < Mathf.Abs(velocity_endgoal.x) && Mathf.Sign(velocity.x) == Mathf.Sign(velocity_endgoal.x))
+            || accelerator_x == 0)
+        {
+            Universals.LerpBetter(accelerator_x, 1f, acceleration_true * Time.deltaTime);
+        }
+        else
+        {
+            Universals.LerpBetter(accelerator_x, 0, acceleration_true * Time.deltaTime);
+        }
+
+        if ((Mathf.Abs(velocity.y) < Mathf.Abs(velocity_endgoal.y) && Mathf.Sign(velocity.y) == Mathf.Sign(velocity_endgoal.y))
+            || accelerator_y == 0)
+        {
+            Universals.LerpBetter(accelerator_y, 1f, acceleration_true * Time.deltaTime);
+        }
+        else
+        {
+            Universals.LerpBetter(accelerator_y, 0, acceleration_true * Time.deltaTime);
+        }
+
+        if ((Mathf.Abs(velocity.z) < Mathf.Abs(velocity_endgoal.z) && Mathf.Sign(velocity.z) == Mathf.Sign(velocity_endgoal.z))
+            || accelerator_z == 0)
+        {
+            Universals.LerpBetter(accelerator_z, 1f, acceleration_true * Time.deltaTime);
+        }
+        else
+        {
+            Universals.LerpBetter(accelerator_z, 0, acceleration_true * Time.deltaTime);
+        }
     }
 
     private void MovementSetY()
@@ -205,11 +276,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         if (IsGrounded())
         {
-            velocity_endgoal.y = (Physics.gravity.y * Time.deltaTime * Time.deltaTime);
+            velocity_endgoal.y = (Physics.gravity.y * Time.deltaTime); //* Time.deltaTime);
         }
         else
         {
-            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * Time.deltaTime * 2);
+            velocity_endgoal.y += (Physics.gravity.y * Time.deltaTime * 2);// * Time.deltaTime * 2);
         }
     }
 
@@ -245,11 +316,10 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
     private void Jump()
     {
-        if ((action_detector.jump || action_detector.jump_higher)
+        if ((action_detector.jump_higher)
             && IsGrounded())
         {
-            //Debug.Log(Time.deltaTime);
-            velocity_endgoal.y = jump_takeoff_speed * Universals.GetTimeFake();
+            velocity_endgoal.y = jump_takeoff_speed; //* Universals.GetTimeFake();
         }
     }
 
@@ -262,7 +332,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         }
         else if (velocity_endgoal.y > -0.00327654 && !(action_detector.jump_higher)) // Reactive jumping
         {
-            velocity_endgoal.y += (0.5f * (Physics.gravity.y * Time.deltaTime * Time.deltaTime));
+            velocity_endgoal.y += (0.5f * (Physics.gravity.y * Time.deltaTime));
         }
     }
 
@@ -291,8 +361,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         if (action_detector.general_action)
         {
-            //HeldThingReset();
-
+            
             try
             {
                 usage_target = ReturnUsableObject();
@@ -380,6 +449,21 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     private void HeldThingSet(Quaternion quat)
     {
         held_object_anchor.transform.rotation = quat;
+    }
+
+    private void AccelerationSet()
+    {
+        if (action_detector.move_forward
+            || action_detector.move_backward
+            || action_detector.move_left
+            || action_detector.move_right)
+        {
+            acceleration_true = acceleration;
+        }
+        else
+        {
+            acceleration_true = deceleration;
+        }
     }
 
     public virtual void DoOnAwake() { }

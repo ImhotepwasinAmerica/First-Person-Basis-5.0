@@ -1,7 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
-    - CharacterBehaviorExecutor
+    - CharacterBehaviorExecutorPlayer
     - ControlsMiscellaneous
     - DataContainer
     - GameEvents
@@ -145,25 +145,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3226}
     - Class: 114
-      Script: {instanceID: 3290}
+      Script: {instanceID: 3268}
     - Class: 114
-      Script: {instanceID: 3422}
+      Script: {instanceID: 3292}
     - Class: 114
-      Script: {instanceID: 3436}
+      Script: {instanceID: 3424}
     - Class: 114
-      Script: {instanceID: 3448}
+      Script: {instanceID: 3438}
     - Class: 114
-      Script: {instanceID: 3452}
+      Script: {instanceID: 3450}
     - Class: 114
-      Script: {instanceID: 3458}
+      Script: {instanceID: 3454}
     - Class: 114
-      Script: {instanceID: 3472}
+      Script: {instanceID: 3474}
     - Class: 114
-      Script: {instanceID: 3578}
+      Script: {instanceID: 3580}
     - Class: 114
-      Script: {instanceID: 3606}
+      Script: {instanceID: 3608}
     - Class: 114
-      Script: {instanceID: 3646}
+      Script: {instanceID: 3648}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -266,25 +266,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3226}
     - Class: 114
-      Script: {instanceID: 3290}
+      Script: {instanceID: 3292}
     - Class: 114
-      Script: {instanceID: 3324}
+      Script: {instanceID: 3326}
     - Class: 114
-      Script: {instanceID: 3422}
+      Script: {instanceID: 3424}
     - Class: 114
-      Script: {instanceID: 3436}
+      Script: {instanceID: 3438}
     - Class: 114
-      Script: {instanceID: 3448}
+      Script: {instanceID: 3450}
     - Class: 114
-      Script: {instanceID: 3452}
+      Script: {instanceID: 3454}
     - Class: 114
-      Script: {instanceID: 3472}
+      Script: {instanceID: 3474}
     - Class: 114
-      Script: {instanceID: 3578}
+      Script: {instanceID: 3580}
     - Class: 114
-      Script: {instanceID: 3606}
+      Script: {instanceID: 3608}
     - Class: 114
-      Script: {instanceID: 3646}
+      Script: {instanceID: 3648}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -336,6 +336,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 108
@@ -385,23 +387,23 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 3226}
     - Class: 114
-      Script: {instanceID: 3290}
+      Script: {instanceID: 3292}
     - Class: 114
-      Script: {instanceID: 3422}
+      Script: {instanceID: 3424}
     - Class: 114
-      Script: {instanceID: 3436}
+      Script: {instanceID: 3438}
     - Class: 114
-      Script: {instanceID: 3448}
+      Script: {instanceID: 3450}
     - Class: 114
-      Script: {instanceID: 3452}
+      Script: {instanceID: 3454}
     - Class: 114
-      Script: {instanceID: 3472}
+      Script: {instanceID: 3474}
     - Class: 114
-      Script: {instanceID: 3578}
+      Script: {instanceID: 3580}
     - Class: 114
-      Script: {instanceID: 3606}
+      Script: {instanceID: 3608}
     - Class: 114
-      Script: {instanceID: 3646}
+      Script: {instanceID: 3648}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -425,6 +427,8 @@ ScriptsOnlyBuild:
     - Class: 223
       Script: {instanceID: 0}
     - Class: 224
+      Script: {instanceID: 0}
+    - Class: 258
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -483,7 +487,7 @@ ScriptsOnlyBuild:
     className: MenuScriptManual
   - hash:
       serializedVersion: 2
-      Hash: dc977686ca7fd656520ad3453f54669d
+      Hash: c0d4e91d30259861818e7c817f9f4955
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerInputDetector
@@ -759,7 +763,7 @@ ScriptsOnlyBuild:
     className: ControlPlayableAsset
   - hash:
       serializedVersion: 2
-      Hash: dc977686ca7fd656520ad3453f54669d
+      Hash: c0d4e91d30259861818e7c817f9f4955
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharacterActionDetector
@@ -903,6 +907,12 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
+      Hash: 8c6dd684e385dc2474a3a3eba70247fc
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CharacterBehaviorExecutorPlayer
+  - hash:
+      serializedVersion: 2
       Hash: 15fdd8d907c413a5e775678dce89d7cb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -939,7 +949,7 @@ ScriptsOnlyBuild:
     className: Scrollbar
   - hash:
       serializedVersion: 2
-      Hash: f11afec6b8adeb0e7971921f9147d397
+      Hash: 59be0d0b870638540bb8b46ce07a0ba8
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CharacterBehaviorExecutor
@@ -1026,4 +1036,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/SampleScene.unity
   - Assets/Scenes/SampleScene2.unity
-  playerPath: C:/Users/potis/Documents/GitHub/First-Person-Basis-5.0/Project5.0/Builds/Post-Crash.exe
+  playerPath: C:/Users/potis/Documents/GitHub/First-Person-Basis-5.0/Project5.0/Builds/0.0032/Post-Crash.exe
