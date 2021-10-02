@@ -58,13 +58,20 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ObjectBehaviorDefault.cs" />
     <Compile Include="Assets\Scripts\PlayerLooking.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptManual.cs" />
     <Compile Include="Assets\Scripts\PlayerInputDetector.cs" />
     <Compile Include="Assets\Scripts\MenuScriptGameplay.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptOptions.cs" />
     <Compile Include="Assets\Scripts\Universals.cs" />
     <Compile Include="Assets\Scripts\DeveloperPreferences.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Game.cs" />
+    <Compile Include="Assets\Scripts\CharacterBehaviorExecutorPlayer.cs" />
+    <Compile Include="Assets\Scripts\MirrorProbe.cs" />
+    <Compile Include="Assets\Scripts\ItemSpawner.cs" />
+    <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptManual.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptOptions.cs" />
     <Compile Include="Assets\Scripts\Serialization.cs" />
     <Compile Include="Assets\Scripts\MenuScriptMain.cs" />
     <Compile Include="Assets\Scripts\ItemLoader.cs" />
@@ -74,21 +81,14 @@
     <Compile Include="Assets\Scripts\DataContainer.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorSceneTransfer.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
-    <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
     <Compile Include="Assets\Scripts\VirtualObject.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
     <Compile Include="Assets\Scripts\SavedObject.cs" />
-    <Compile Include="Assets\Scripts\LevelManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\Game.cs" />
     <Compile Include="Assets\Scripts\MenuScriptSound.cs" />
-    <Compile Include="Assets\Scripts\CharacterBehaviorExecutorPlayer.cs" />
     <Compile Include="Assets\Scripts\ControlsMiscellaneous.cs" />
-    <Compile Include="Assets\Scripts\MirrorProbe.cs" />
     <Compile Include="Assets\Scripts\ItemCaller.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptFiles.cs" />
     <Compile Include="Assets\Scripts\CharacterBehaviorExecutor.cs" />
-    <Compile Include="Assets\Scripts\ItemSpawner.cs" />
-    <Compile Include="Assets\Scripts\GameEvents.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptFiles.cs" />
     <Compile Include="Assets\Scripts\MenuScriptGraphics.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -679,9 +679,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Unity.ShaderGraph.Editor.csproj">
+      <Project>{FF1B6A98-0B2D-80C7-61F5-5AFBD12932FE}</Project>
+      <Name>Unity.ShaderGraph.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.VSCode.Editor.csproj">
       <Project>{76E3CC2F-8FDA-4B14-1652-60716A84E0EB}</Project>
       <Name>Unity.VSCode.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.csproj">
+      <Project>{D32417B1-C985-0A13-5D42-A0BCD9429BE9}</Project>
+      <Name>Unity.RenderPipelines.Universal.Shaders</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Editor.csproj">
+      <Project>{2E02A2BE-4A1F-2297-9A5A-F45359FE8445}</Project>
+      <Name>Unity.RenderPipelines.Universal.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Universal.Runtime.csproj">
+      <Project>{FA7559A0-0DA4-F8D3-6F53-23741D6DB640}</Project>
+      <Name>Unity.RenderPipelines.Universal.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
       <Project>{35907E5E-67DE-5D0D-D58C-DEB4F17FC9E8}</Project>
@@ -691,6 +707,10 @@
       <Project>{ED676BE6-FDC6-BCA0-B599-2599A4AF06D6}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
+      <Project>{05ED38BF-DDA6-AEF3-4A0C-C9608781655E}</Project>
+      <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Timeline.Editor.csproj">
       <Project>{B24FDA0E-C5C1-F487-5E3C-D1BB22D8A05C}</Project>
       <Name>Unity.Timeline.Editor</Name>
@@ -699,9 +719,25 @@
       <Project>{20EC5C1E-6F65-E34E-3AEC-E8E2740469EB}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
+      <Project>{385E18CE-16B1-AB2C-63D1-5EAE8DAD07ED}</Project>
+      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{33D733AC-72A1-761E-F759-46C6A11F3759}</Project>
       <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Editor.csproj">
+      <Project>{BE99F588-C67B-8439-C878-B8E0760744F3}</Project>
+      <Name>Unity.Mathematics.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Searcher.Editor.csproj">
+      <Project>{82E56EF3-53B0-77B7-E647-0C5F62F85C6E}</Project>
+      <Name>Unity.Searcher.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
+      <Project>{9876A17A-1BCA-751B-DC77-1729E8E42F15}</Project>
+      <Name>Unity.RenderPipelines.Core.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.UI.csproj">
       <Project>{9044F4D8-37D2-E40E-9CCE-851EE8775B7D}</Project>
@@ -711,9 +747,41 @@
       <Project>{015AA7CC-48B0-2284-7B19-76E83CA6FB32}</Project>
       <Name>Unity.Rider.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.ShaderLibrary.csproj">
+      <Project>{E55FCA29-610C-72A0-DB15-B16A0F235CD0}</Project>
+      <Name>Unity.RenderPipelines.Core.ShaderLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.csproj">
       <Project>{C51AC006-1148-FEE7-68C4-59239F863EB6}</Project>
       <Name>UnityEngine.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.Core.Editor.csproj">
+      <Project>{5D9A7271-E4E2-FF79-F23B-18EAB16466F3}</Project>
+      <Name>Unity.RenderPipelines.Core.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.csproj">
+      <Project>{6FC16F8F-A909-CC82-5841-9B652F7BA506}</Project>
+      <Name>Unity.Mathematics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualEffectGraph.Editor.csproj">
+      <Project>{EA58589B-D1B7-84FC-FCF4-A7CA107ACC9E}</Project>
+      <Name>Unity.VisualEffectGraph.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.VisualEffectGraph.Runtime.csproj">
+      <Project>{62638AE3-6365-2CFE-5D66-C53C3EF687F5}</Project>
+      <Name>Unity.VisualEffectGraph.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Runtime.csproj">
+      <Project>{4AF33340-14E6-53B5-5065-EEEF2AA1DCB4}</Project>
+      <Name>Unity.RenderPipelines.HighDefinition.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Editor.csproj">
+      <Project>{F94A706F-37EF-407B-6F41-0768F5568E36}</Project>
+      <Name>Unity.RenderPipelines.HighDefinition.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime.csproj">
+      <Project>{4DC5D578-062E-F1EA-23F5-4255DBC32224}</Project>
+      <Name>Unity.RenderPipelines.HighDefinition.Config.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
