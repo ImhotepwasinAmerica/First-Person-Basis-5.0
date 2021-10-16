@@ -39,7 +39,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
             Debug.Log("Event system not found.");
         }
 
-        
+        DoOnAwake();
     }
 
     // Start is called before the first frame update
@@ -59,6 +59,8 @@ public class ObjectBehaviorDefault : MonoBehaviour
     private void Update()
     {
         MoveAugment();
+
+        DoOnUpdate();
     }
 
     // Update is called once per frame
@@ -74,7 +76,7 @@ public class ObjectBehaviorDefault : MonoBehaviour
             RecordPosition();
         }
 
-        
+        DoOnFixedUpdate();
     }
 
     void OnCollisionEnter(Collision collision)

@@ -52,9 +52,6 @@ public class ObjectBehaviorSceneTransfer : ObjectBehaviorDefault
     public void LoadNewLevel()
     {
         slider = GameObject.FindGameObjectWithTag("LevelTransferSlider");
-
-        
-
         StartCoroutine(LoadAsynchronously(scene_name));
     }
 

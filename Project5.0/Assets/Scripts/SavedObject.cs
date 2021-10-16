@@ -26,6 +26,8 @@ using UnityEditor;
  * bools[0] = the object's state of being invincible (whether it will take damage at all)
  * bools[1] = the object's state of being on or off (if the object is a switch, light source or something similar)
  * objects[1] - objects[10] = a character's toolbelt (hotbar)
+ * 
+ * This design is hereby discontinued until further notice.s
  */
 [System.Serializable]
 public class SavedObject

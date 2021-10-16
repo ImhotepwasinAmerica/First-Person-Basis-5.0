@@ -56,40 +56,43 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\ObjectBehaviorDefault.cs" />
-    <Compile Include="Assets\Scripts\PlayerLooking.cs" />
     <Compile Include="Assets\Scripts\PlayerInputDetector.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptGameplay.cs" />
     <Compile Include="Assets\Scripts\MenuTraversal.cs" />
     <Compile Include="Assets\Scripts\Universals.cs" />
     <Compile Include="Assets\Scripts\DeveloperPreferences.cs" />
-    <Compile Include="Assets\Scripts\LevelManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\Game.cs" />
-    <Compile Include="Assets\Scripts\CharacterBehaviorExecutorPlayer.cs" />
-    <Compile Include="Assets\Scripts\MirrorProbe.cs" />
     <Compile Include="Assets\Scripts\ItemSpawner.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\MenuScriptManual.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptOptions.cs" />
     <Compile Include="Assets\Scripts\Serialization.cs" />
     <Compile Include="Assets\Scripts\MenuScriptMain.cs" />
     <Compile Include="Assets\Scripts\ItemLoader.cs" />
     <Compile Include="Assets\Scripts\MenuScriptKeybinds.cs" />
+    <Compile Include="Assets\Scripts\VirtualObject.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
+    <Compile Include="Assets\Scripts\SavedObject.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptSound.cs" />
+    <Compile Include="Assets\Scripts\CharacterBehaviorExecutor.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptGraphics.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorDefault.cs" />
+    <Compile Include="Assets\Scripts\PlayerLooking.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptGameplay.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\CharacterBehaviorExecutorPlayer.cs" />
+    <Compile Include="Assets\Scripts\MirrorProbe.cs" />
+    <Compile Include="Assets\Scripts\MenuScriptOptions.cs" />
+    <Compile Include="Assets\Scripts\KillBox.cs" />
     <Compile Include="Assets\Scripts\CharacterActionDetector.cs" />
     <Compile Include="Assets\Scripts\Scene.cs" />
     <Compile Include="Assets\Scripts\DataContainer.cs" />
     <Compile Include="Assets\Scripts\ObjectBehaviorSceneTransfer.cs" />
     <Compile Include="Assets\Scripts\Character.cs" />
-    <Compile Include="Assets\Scripts\VirtualObject.cs" />
-    <Compile Include="Assets\Scripts\ObjectBehaviorBoxTest.cs" />
-    <Compile Include="Assets\Scripts\SavedObject.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptSound.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorSwitch.cs" />
     <Compile Include="Assets\Scripts\ControlsMiscellaneous.cs" />
     <Compile Include="Assets\Scripts\ItemCaller.cs" />
-    <Compile Include="Assets\Scripts\CharacterBehaviorExecutor.cs" />
     <Compile Include="Assets\Scripts\MenuScriptFiles.cs" />
-    <Compile Include="Assets\Scripts\MenuScriptGraphics.cs" />
+    <Compile Include="Assets\Scripts\ObjectBehaviorLightswitch.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
@@ -305,14 +308,11 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.6f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.XRModule.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    <Reference Include="Unity.VisualEffectGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -320,14 +320,11 @@
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Mathematics.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
@@ -335,14 +332,20 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.VisualEffectGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualEffectGraph.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.HighDefinition.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.HighDefinition.Editor.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.3.6f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -699,21 +702,21 @@
       <Project>{FA7559A0-0DA4-F8D3-6F53-23741D6DB640}</Project>
       <Name>Unity.RenderPipelines.Universal.Runtime</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
-      <Project>{05ED38BF-DDA6-AEF3-4A0C-C9608781655E}</Project>
-      <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
+    <ProjectReference Include="Unity.VisualEffectGraph.Runtime.csproj">
+      <Project>{62638AE3-6365-2CFE-5D66-C53C3EF687F5}</Project>
+      <Name>Unity.VisualEffectGraph.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Timeline.csproj">
       <Project>{20EC5C1E-6F65-E34E-3AEC-E8E2740469EB}</Project>
       <Name>Unity.Timeline</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
-      <Project>{385E18CE-16B1-AB2C-63D1-5EAE8DAD07ED}</Project>
-      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.TextMeshPro.csproj">
       <Project>{33D733AC-72A1-761E-F759-46C6A11F3759}</Project>
       <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Runtime.csproj">
+      <Project>{4AF33340-14E6-53B5-5065-EEEF2AA1DCB4}</Project>
+      <Name>Unity.RenderPipelines.HighDefinition.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.csproj">
       <Project>{9876A17A-1BCA-751B-DC77-1729E8E42F15}</Project>
@@ -731,13 +734,13 @@
       <Project>{6FC16F8F-A909-CC82-5841-9B652F7BA506}</Project>
       <Name>Unity.Mathematics</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.VisualEffectGraph.Runtime.csproj">
-      <Project>{62638AE3-6365-2CFE-5D66-C53C3EF687F5}</Project>
-      <Name>Unity.VisualEffectGraph.Runtime</Name>
+    <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
+      <Project>{05ED38BF-DDA6-AEF3-4A0C-C9608781655E}</Project>
+      <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Runtime.csproj">
-      <Project>{4AF33340-14E6-53B5-5065-EEEF2AA1DCB4}</Project>
-      <Name>Unity.RenderPipelines.HighDefinition.Runtime</Name>
+    <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.csproj">
+      <Project>{385E18CE-16B1-AB2C-63D1-5EAE8DAD07ED}</Project>
+      <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.HighDefinition.Config.Runtime.csproj">
       <Project>{4DC5D578-062E-F1EA-23F5-4255DBC32224}</Project>

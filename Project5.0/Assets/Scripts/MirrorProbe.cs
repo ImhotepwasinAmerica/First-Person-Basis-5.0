@@ -28,7 +28,7 @@ public class MirrorProbe : MonoBehaviour
         {
             if (orientation == Directions.X)
             {
-                offset = mirror.transform.position.x - Camera.main.transform.position.x;
+                offset = mirror.transform.position.x - camera.transform.position.x;
 
                 probePos.x = mirror.transform.position.x + offset;
                 probePos.y = camera.transform.position.y;
@@ -36,7 +36,7 @@ public class MirrorProbe : MonoBehaviour
             }
             else if (orientation == Directions.Y)
             {
-                offset = mirror.transform.position.y - Camera.main.transform.position.y;
+                offset = mirror.transform.position.y - camera.transform.position.y;
 
                 probePos.x = camera.transform.position.x;
                 probePos.y = mirror.transform.position.y + offset;
@@ -44,7 +44,7 @@ public class MirrorProbe : MonoBehaviour
             }
             else if (orientation == Directions.Z)
             {
-                offset = mirror.transform.position.z - Camera.main.transform.position.z;
+                offset = mirror.transform.position.z - camera.transform.position.z;
 
                 probePos.x = camera.transform.position.x;
                 probePos.y = camera.transform.position.y;
