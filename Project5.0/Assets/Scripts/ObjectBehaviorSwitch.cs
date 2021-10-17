@@ -27,6 +27,6 @@ public class ObjectBehaviorSwitch : ObjectBehaviorDefault
 
     public bool OnOrOff()
     {
-        return this.object_data.bools[1];
+        return on_off;
     }
 }

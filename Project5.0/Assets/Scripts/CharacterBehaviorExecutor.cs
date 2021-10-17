@@ -366,8 +366,6 @@ public class CharacterBehaviorExecutor : MonoBehaviour
             {
                 usage_target = ReturnUsableObject();
 
-                //HeldThingSet(usage_target.transform.rotation);
-                //Debug.Log("Interacting object: " + usage_target);
                 usage_target.GetComponent<ObjectBehaviorDefault>().UseDefault(held_object_anchor);
 
                 usage_target = null;

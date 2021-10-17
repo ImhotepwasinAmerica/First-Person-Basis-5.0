@@ -249,7 +249,7 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
 
     public void SaveSelf()
     {
-        Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
+        //Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
         Serialization.Save<SavedObject>(guy,
             Application.persistentDataPath + "/saves/savedgames/"
             + PlayerPrefs.GetString("saved_game_slot")
@@ -258,7 +258,7 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
 
     public void SaveSelfAux()
     {
-        Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
+        //Debug.Log(guy.rotation_x + " " + guy.rotation_y + " " + guy.rotation_z);
         Serialization.Save<SavedObject>(guy,
             Application.persistentDataPath + "/saves/savedgames/auxiliary/"
             + "/character.dat");
