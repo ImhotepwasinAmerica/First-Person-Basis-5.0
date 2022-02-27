@@ -208,13 +208,14 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
     {
         if (!action_detector.item_rotate)
         {
-            md.x = action_detector.mouse_x * (sensitivity * 50) * Time.deltaTime;
+            md.x += action_detector.mouse_x * (sensitivity * 50) * Time.deltaTime;
             md.y -= action_detector.mouse_y * (sensitivity * 50) * Time.deltaTime;
 
             md.y = Mathf.Clamp(md.y, -90f, 90f);
 
             camera.transform.localRotation = Quaternion.Euler(md.y, 0, 0);
-            transform.Rotate(Vector3.up * md.x);
+            transform.localRotation = Quaternion.Euler(0, md.x, 0);
+            //transform.Rotate(Vector3.up * md.x);
         }
     }
 

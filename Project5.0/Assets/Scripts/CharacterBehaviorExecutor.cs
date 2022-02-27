@@ -27,7 +27,7 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     public Vector2 md;
 
     private Vector2 mouse_look, smooth_v;
-    private float acceleration_true, accelerator_x, accelerator_y, accelerator_z;
+    private float acceleration_true, accelerator_x, accelerator_y, accelerator_z, speed_scale;
     private bool is_walking, current_grounded, previous_grounded, general_action_this;
     private Quaternion held_thing_rotation;
 
@@ -51,6 +51,8 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         guy = data_container.GetComponent<DataContainer>().character;
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        speed_scale = 0.001f;
 
         accelerator_x = 0;
         accelerator_y = 0;
@@ -88,14 +90,13 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             Jump();
 
-
             //AccelerationSet();
             //MovementLerpUnifiedXZ();
 
             //MovementLerpRealXZ();
             //AcceleratorScale();
 
-            MovementSetY();
+            MovementSetY();  // Original version
 
             BetterMovement();
 
@@ -103,9 +104,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
             SpinHeldThing();
 
-            //ApplyTime();
+            controller.Move(velocity * Time.deltaTime);  // Original version
 
-            controller.Move(velocity * Time.deltaTime);
+            //velocity_endgoal.x = velocity_endgoal.x * speed_scale;
+            //velocity_endgoal.z = velocity_endgoal.z * speed_scale;
+            //controller.Move(velocity_endgoal * Time.deltaTime);
 
             previous_grounded = current_grounded;
             current_grounded = IsGrounded();
@@ -118,9 +121,11 @@ public class CharacterBehaviorExecutor : MonoBehaviour
 
     void FixedUpdate()
     {
-        AccelerationSet();
-        MovementLerpUnifiedXZ();
-        //velocity = velocity_endgoal;
+        AccelerationSet();  // Original version
+        MovementLerpUnifiedXZ();  // Original version
+        //AccelerationSet2();
+        //velocity_endgoal.x *= speed_scale;
+        //velocity_endgoal.z *= speed_scale;
 
         DoOnFixedUpdate();
     }
@@ -361,7 +366,6 @@ public class CharacterBehaviorExecutor : MonoBehaviour
     {
         if (action_detector.general_action)
         {
-            
             try
             {
                 usage_target = ReturnUsableObject();
@@ -461,6 +465,32 @@ public class CharacterBehaviorExecutor : MonoBehaviour
         else
         {
             acceleration_true = deceleration;
+        }
+    }
+
+    private void AccelerationSet2()
+    {
+        if (!action_detector.move_forward
+            && !action_detector.move_backward
+            && !action_detector.move_left
+            && !action_detector.move_right)
+        {
+            //Universals.LerpBetter(speed_scale, 0, deceleration);
+            if(speed_scale-(deceleration * Universals.GetTimeFake()) > 0)
+            {
+                speed_scale -= (deceleration * Universals.GetTimeFake());
+            }
+        }
+        else
+        {
+            //Universals.LerpBetter(speed_scale, 1, acceleration);
+
+            if (speed_scale+(acceleration * Universals.GetTimeFake()) < 1)
+            {
+                speed_scale += (acceleration * Universals.GetTimeFake());
+            }
+
+            Debug.Log(speed_scale);
         }
     }
 
