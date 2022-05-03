@@ -1373,6 +1373,7 @@ MonoBehaviour:
   newresume_text: {fileID: 990272597}
   quitmainmenu_text: {fileID: 2065691101}
   slider: {fileID: 143405168}
+  newgame_start_level: SampleSceneBlobber
 --- !u!1 &73940469
 GameObject:
   m_ObjectHideFlags: 0

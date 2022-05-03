@@ -198,4 +198,69 @@ public class Universals : MonoBehaviour
     {
         return Mathf.Sqrt((a * a) + (b * b));
     }
+
+    public static string GetCharacterBackground()
+    {
+        int roll = Universals.DiceRoll(1, 100);
+
+        switch(roll)
+        {
+            case 1:
+                return "slave";
+            case 2:
+                return "human drug dealer";
+                break;
+            case 3:
+                return "hitchhiker";
+                break;
+            case 4:
+                return "human male mechanic";
+                break;
+            case 5:
+                return "human male programmer";
+                break;
+            case 6:
+                return "human female sex slave";
+                break;
+            case 7:
+                return "humaan plumber";
+                break;
+            case 8:
+                return "human farmer";
+                break;
+            case 9:
+                return "human male hobo";
+                break;
+            case 10:
+                return "male doctor";
+                break;
+            case 11:
+                return "rancher";
+                break;
+            case 12:
+                return "human barber";
+                break;
+            case 13:
+                return "human male insurance salesman";
+                break;
+            case 14:
+                return "bartender";
+                break;
+            case 15:
+                return "female accountant";
+                break;
+            case 16:
+                return "trader clansman";
+                break;
+            case 17:
+                return "human robot minder";
+                break;
+            case 18:
+                return "butcher";
+                break;
+            default:
+                return "adventurer";
+                break;
+        }
+    }
 }

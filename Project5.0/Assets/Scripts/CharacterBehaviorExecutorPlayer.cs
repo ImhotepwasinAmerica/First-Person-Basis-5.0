@@ -110,7 +110,7 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
         }
     }
 
-    private void ControlLean()
+    public virtual void ControlLean()
     {
         if ((action_detector.lean_left && action_detector.lean_right) || (!action_detector.lean_left && !action_detector.lean_right))
         {
@@ -141,7 +141,7 @@ public class CharacterBehaviorExecutorPlayer : CharacterBehaviorExecutor
         }
     }
 
-    private void CycaBlyat()
+    public virtual void CycaBlyat()
     {
         if (PlayerPrefs.GetString("togglehold_squat") == "hold")
         {

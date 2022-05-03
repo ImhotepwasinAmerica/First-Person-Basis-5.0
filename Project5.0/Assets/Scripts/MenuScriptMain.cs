@@ -9,6 +9,7 @@ public class MenuScriptMain : MonoBehaviour
     public GameObject data_container, main_menu, loading_screen, options_menu, load_game_menu, manual_menu, some_controls;
     public Text newresume_text, quitmainmenu_text;
     public Slider slider;
+    public string newgame_start_level;
 
     // Start is called before the first frame update
     void Start()
@@ -93,7 +94,7 @@ public class MenuScriptMain : MonoBehaviour
 
     public void LoadLevel01()
     {
-        StartCoroutine(LoadAsynchronously("SampleScene"));
+        StartCoroutine(LoadAsynchronously(newgame_start_level));
     }
 
     public void LoadMainMenu()
